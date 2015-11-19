@@ -15,30 +15,32 @@ Functionality is as follows:
 - unique name (default to Language1-Language2)
 
 #####addEntry
-- phrase in language1
-- phrase in language2
+- phrase in language1 (must be unique)
+- phrase in language2 (must be unique)
 - category (e.g. noun, verb)
 - tag (e.g. 'cooking' or 'SummerClass2015')
 - 'like'
 
 #####quiz
--[chose tags to be tested on] Can be several
+- chose tags to be tested on Can be several
 - chose which language to be quizzed in (l1 or l2) dropdown
 - randomly select a word from chosen tags. prompt to input translation
+- get help (jokers tbd)
  
 ##Controller/ Functionality:
 - can use joker (e.g. show first letter, or indicate number of letters looking for
 
 ##models:
 ####Entry
-- l1 (string)
-- l2 (string)
-- category (string)
+- language1 (string)
+- language2 (string)
+- category string
+- tags [string]
 - lastTested (Date)
 - lastAnswerSuccessful: bool
 - percentSuccess: number
-- _userId
-- like: boolean //will be tested more regularly
+- user: string(Id)
+- like: number //0: dont test, 1: test regularly, 2: test frequently
 
 ####User
 - email
@@ -50,4 +52,4 @@ Functionality is as follows:
 - language1
 - language2
 - [entryID]
-- _userId
+- user: string (Id)
