@@ -1,0 +1,39 @@
+{
+  "name": "vocabtrainer",
+  "version": "1.0.0",
+  "description": "vocabulary training software",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -e html,js,css ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonatanS/vocabtrainer.git"
+  },
+  "keywords": [
+    "vocabulary",
+    "training",
+    "language",
+    "testing",
+    "test",
+    "train"
+  ],
+  "author": "Jonatan Schumacher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonatanS/vocabtrainer/issues"
+  },
+  "homepage": "https://github.com/JonatanS/vocabtrainer#readme",
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "body-parser": "^1.14.1",
+    "chalk": "^1.1.1",
+    "express": "^4.13.3",
+    "mongoose": "^4.2.7",
+    "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}
