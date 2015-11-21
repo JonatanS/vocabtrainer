@@ -41,7 +41,9 @@ Functionality is as follows:
 - percentSuccess: (Number)
 - userId: (String)
 - like: (Number) //0: dont test, 1: test regularly, 2: test frequently
-- level (Number) //1 (beginner) - 5 (professional)
+- level: (Number) //1 (beginner) - 5 (professional)
+- dateCreated: (Date)
+- dateUpdated: (Date)
 
 ####User
 - email
