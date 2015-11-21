@@ -32,21 +32,23 @@ Functionality is as follows:
 
 ##models:
 ####Entry
-- language1 (string)
-- language2 (string)
-- category string
-- tags [string]
+- language1 (String)
+- language2 (String)
+- category (String)
+- tags [String]
 - lastTested (Date)
-- lastAnswerSuccessful: bool
-- percentSuccess: number
-- user: string(Id)
-- like: number //0: dont test, 1: test regularly, 2: test frequently
+- lastAnswerSuccessful: (Boolean)
+- percentSuccess: (Number)
+- userId: (String)
+- like: (Number) //0: dont test, 1: test regularly, 2: test frequently
+- level (Number) //1 (beginner) - 5 (professional)
 
 ####User
 - email
 - name
 - dicts [dictionairies]
-- lastDictUsed: _dictId
+- lastDictUsedToEnter: _dictId
+- lastDictUsedToTest: _dictId
  
 ####Dictionary
 - language1
