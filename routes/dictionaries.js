@@ -15,8 +15,8 @@ router.get('/:dictId/listView', function (req,res,next){
 	var promiseArr = []
 	return Dict.findById({_id: req.params.dictId})
 	.then(function(dict){
-		console.log("Dict:" + dict);
+		console.log("Dict with entries:" + JSON.stringify(dict));
     	//res.send(entries);
-    	res.render('entriesListView', {dictionary: dict});
+    	res.render('entry/entriesListView', {dictionary: dict});
 	});
 });

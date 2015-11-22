@@ -37,7 +37,7 @@ router.post('/add', function (req, res, next){
 	})
 	.then(function(user){
 		// go to their dicts page:
-		res.render('userDicts', {user: user, dictionaries: [{}]});
+		res.render('user/userDicts', {user: user, dictionaries: [{}]});
 	})
 	.then(null, next);
 });
@@ -54,26 +54,11 @@ router.get('/:userId', function (req, res, next){
     .then(function (info) {
         var foundUser = info[0];
         var foundDicts = info[1];
-        res.render('userDicts', {
+        res.render('user/userDicts', {
             dictionaries: foundDicts,
             user: foundUser
         });
     })
     .then(null, next);
-
-
-	// .then(function(user){
-	// 	//return Dict.find({userId: req.params.userId});
-	// 	return Dict.find({userId: user._id});
-	// })
-	// .then(function(dicts){
-	// 	//render userDicts
-	// 	console.log("user:", user);
-	// 	console.log("Dicts:", dicts);
-	// 	//console.log("\n\nDICTS:", userAndDicts[1]);
-	// 	res.send(dicts);
-	// 	//res.render('userDicts', {user: dictsWithUser.user, dictionaries: dictsWithUser.dictionaries});
-	// })
-	// .then(null, next);	//call next in case of error
 });
 

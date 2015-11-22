@@ -5,13 +5,8 @@ list users dictionaries
 add links to add more vocab or to start the test
 -->
 
-<!--
-{% if dictionaries.length === 0%}
-	you should create a dictionary to start!
-}
-}
-{% else %}
--->
+{% if dictionaries.length > 0%}
+	<h4>Choose a dictionary to work with:</h4>
 <ul>
 {% for dict in dictionaries %}
 <li>{{dict | dictListLinkFromUser }}</li>
@@ -20,9 +15,12 @@ add links to add more vocab or to start the test
 {% endif %}
 
 <hr>
-
+{% if dictionaries.length > 0%}
+  <h5>or add a new dictionary:</h5>
+{% else %}
 <h4>Add a new dictionary:</h4>
-  <form method="POST" action="/dictionaries/add">
+{% endif %}
+  <form method="POST" action="/../dictionaries/add">
     
     <div class="form-group">
       <label for="language1" class="col-sm-2 control-label">Language to study: </label>

@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 //determine which sub router to use
 app.use('/users', require('./routes/users'));
 app.use('/dictionaries', require('./routes/dictionaries'));
+app.use('/entries', require('./routes/entries'));
 
 app.get('/', function (req, res) {
    res.render('index');

@@ -4,9 +4,12 @@
 <p>You should create some entries first!</p>
 <!--else list them with links and have a form for a new dict at the bottom-->
 {% else %}
+{% set entries = dictionary.entries %}
+<p>There are {{entries.length}} entries in the dictionary</p>
 <ul>
-{% for entry in dictionary.entries %}
-  <li>entry.language1 = entry.language2</li>
+I need to store the actual entries, not just their IDs!!!
+{% for key, val in entries %}
+  <li>{{key}} = {{val.category}}</li>
 {% endfor %}
 </ul>
 {% endif %}
@@ -14,8 +17,11 @@
 <hr>
 
 <h4>Add a new entry:</h4>
-  <form method="POST" action="/entries/add">
-    
+  <form method="POST" action="/../entries/add">
+    <input type="hidden" name="userId" value="{{dictionary.userId}}" class="form-control">
+
+    <input type="hidden" name="dictId" value="{{dictionary._id.toString()}}" class="form-control">
+
     <div class="form-group">
       <label for="phraseL1" class="col-sm-2 control-label">Phrase in {{dictionary.language1}}: </label>
       <div class="col-sm-10">
@@ -31,13 +37,36 @@
     </div>
 
     <div class="form-group">
-      <label for="content" class="col-sm-2 control-label">Content</label>
+      <label for="category" class="col-sm-2 control-label">Category</label>
       <div class="col-sm-10">
-        <select>
+        <select name="category">
+          <option selected value=""></option>
           <option value="adverb">Adverb</option>
           <option value="adjective">Adjective</option>
+          <option value="expression">Expression</option>
           <option value="noun">Noun</option>
-          <option selected value="verb">Verb</option>
+          <option value="sentence">Sentence</option>
+          <option value="verb">Verb</option>
+        </select>
+      </div>  
+    </div>
+
+    <div class="form-group">
+      <label for="mnemonic" class="col-sm-2 control-label">mnemonic</label>
+      <div class="col-sm-10">
+        <input name="mnemonic" type="text" class="form-control" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="level" class="col-sm-2 control-label">Level</label>
+      <div class="col-sm-10">
+        <select name="level">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option selected value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>
       </div>  
     </div>
@@ -49,18 +78,12 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="content" class="col-sm-2 control-label">Level</label>
-      <div class="col-sm-10">
-        <select>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option selected value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </div>  
+  <div class="form-group">
+    <label for "continueAdding" class="col-sm-2 control-label">add more entries</label>
+    <div class="col-sm-10">
+      <input name="continueAdding" type="checkbox" class="form-control" checked/>
     </div>
+  </div>
 
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-primary">submit</button>

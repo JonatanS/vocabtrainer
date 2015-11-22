@@ -50,11 +50,12 @@ var dictSchema = new mongoose.Schema({
 
 //ENTRY SCHEMA
 var entrySchema = new mongoose.Schema({
-	user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-	phraseL1: {type: String, required: true},
+	userId: {type: String, required: true},
+	phraseL1: {type: String, required: true, unique: true},
 	phraseL2: {type: String, required: true},
-	category: {type: String, required: true, enum: ['adverb','adjective','noun', 'verb' ]},
+	category: {type: String, required: false, enum: ['adverb','adjective','expression','noun','sentence','verb' ]},
 	tags: [String],
+	mnemonic: String,
 	dateCreated: {type: Date, default: Date.now},
 	dateUpdated: {type: Date},
 	dateLastTested: {type: Date},
