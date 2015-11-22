@@ -1,9 +1,12 @@
 # vocabtrainer
 
-This is my first node application, written after 7pm mid week, and on Sundays. So bare with me.
+This is my first promise-style node application, written after 7pm mid week, and on Sundays. So bare with me.
 Functionality is as follows:
 
 ##Views:
+#####index
+- login/ sign up with email
+
 #####user
 - list existing dictionaries
 - link to add new dictionary
@@ -48,7 +51,7 @@ Functionality is as follows:
 ####User
 - email
 - name
-- dicts [dictionairies]
+- ~~dicts [dictionairies]~~
 - lastDictUsedToEnter: _dictId
 - lastDictUsedToTest: _dictId
  

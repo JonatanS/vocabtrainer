@@ -1,5 +1,6 @@
 var mongoose = require ('mongoose');
 mongoose.connect('mongodb://localhost/vocabtrainer');
+var Schema = mongoose.Schema;
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongodb connection error: '));  //log error on unsucessful connection
@@ -11,41 +12,50 @@ var userSchema = new mongoose.Schema({
 	email:{type: String, required: true, unique: true},
 	firstName: {type: String, required: true},
 	lastName: {type: String, required: true},
+	dateRegistered: {type: Date, default: Date.now},
 	lastDictUsedToEnter: String,	//TODO: write get method
 	lastDictUsedToTest: String,		//TODO: write get method
-	dictionaryIds: {type: [String] }
+	//dictionaryIds: {type: [String] }
 });
 
 userSchema.virtual('fullName').get(function () {
 	return this.firstName + " " + this.lastName;
 });
 
-
 //DICTIONARY SCHEMA
+var languages = ['English', 'French', 'Spanish', 'German', 'Italian'];
 var dictSchema = new mongoose.Schema({
 	language1: {
 		type: String, 
-		required: true
-		enum: ['English', 'French', 'Spanish', 'German', 'Italian']
+		required: true,
+		enum: languages
 	},
 	language2: {
 		type: String, 
-		required: true
-		enum: ['English', 'French', 'Spanish', 'German', 'Italian']
+		required: true,
+		enum: languages
 	},
+	name: {type: String, unique: true},	//TODO write auto-naming function
 	userId: {type: String, required: true},
-	entries: {type: [String]}
+	entries: [{type: Schema.Types.ObjectId, ref: 'Entry'}]
 });
+
+// //write method to return entries for dict from [entryIds]
+// dictSchema.method.getEntries = function (){
+// 	return Entry.find({
+// 	        _id: {$in: this.entries}
+// 	}).exec();
+// };
 
 
 //ENTRY SCHEMA
 var entrySchema = new mongoose.Schema({
-	userId: {type: String, required: true},
+	user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
 	phraseL1: {type: String, required: true},
 	phraseL2: {type: String, required: true},
 	category: {type: String, required: true, enum: ['adverb','adjective','noun', 'verb' ]},
 	tags: [String],
-	dateCreated: {type: Date, default: Date.now}
+	dateCreated: {type: Date, default: Date.now},
 	dateUpdated: {type: Date},
 	dateLastTested: {type: Date},
 	lastAnswerSuccessful: {type: Boolean},
@@ -60,17 +70,18 @@ entrySchema.virtual('type').get(function(){
 });
 
 entrySchema.statics.findByTag = function (tag) {
-	return this.find({
-		tags: { $in: this.tags}
+	return Entry.find({
+		tags: { $in: [tag]}
 	}).exec();
-}
-
+};
 
 
 //TEST SCHEMA
 
 
 
+
+//EXPORT MODELS
 var User = mongoose.model('User', userSchema);
 var Entry = mongoose.model('Entry', entrySchema);
 var Dictionary = mongoose.model('Dictionary', dictSchema);
@@ -80,11 +91,3 @@ module.exports = {
 	Entry: Entry,
 	Dictionary: Dictionary
 };
-
-
-
-
-
-
-
-
