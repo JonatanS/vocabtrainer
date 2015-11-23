@@ -42,7 +42,8 @@ Functionality is as follows:
 - lastTested (Date)
 - lastAnswerSuccessful: (Boolean)
 - percentSuccess: (Number)
-- userId: (String)
+- dictionary: dictId // could become array if i want to reuse entries
+- ~~userId: (String)~~
 - like: (Number) //0: dont test, 1: test regularly, 2: test frequently
 - level: (Number) //1 (beginner) - 5 (professional)
 - dateCreated: (Date)
@@ -58,5 +59,6 @@ Functionality is as follows:
 ####Dictionary
 - language1
 - language2
-- [entryID]
+- ~~[entryID]~~
 - user: string (Id)
+- private/ public
