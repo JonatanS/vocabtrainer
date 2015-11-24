@@ -12,7 +12,7 @@ var userSchema = new mongoose.Schema({
 	email:{type: String, required: true, unique: true},
 	firstName: {type: String, required: true},
 	lastName: {type: String, required: true},
-	dateRegistered: {type: Date, default: Date.now},
+	dateRegistered: {type: Date, default: Date.now, required: true},
 	lastDictUsedToEnter: String,	//TODO: write get method
 	lastDictUsedToTest: String,		//TODO: write get method
 	//dictionaryIds: {type: [String] }
@@ -37,8 +37,9 @@ var dictSchema = new mongoose.Schema({
 	},
 	name: {type: String, unique: true},	//TODO write auto-naming function
 	userId: {type: String, required: true},
-	entries: [{type: Schema.Types.ObjectId, ref: 'Entry'}]
+	isPublic: {type: Boolean, default: false, required: true}
 });
+
 
 // //write method to return entries for dict from [entryIds]
 // dictSchema.method.getEntries = function (){
@@ -50,7 +51,9 @@ var dictSchema = new mongoose.Schema({
 
 //ENTRY SCHEMA
 var entrySchema = new mongoose.Schema({
+	//http://stackoverflow.com/questions/14992123/finding-a-mongodb-document-by-objectid-with-mongoose
 	userId: {type: String, required: true},
+	dictId: {type: String, required: true},
 	phraseL1: {type: String, required: true, unique: true},
 	phraseL2: {type: String, required: true},
 	category: {type: String, required: false, enum: ['adverb','adjective','expression','noun','sentence','verb' ]},
@@ -58,10 +61,6 @@ var entrySchema = new mongoose.Schema({
 	mnemonic: String,
 	dateCreated: {type: Date, default: Date.now},
 	dateUpdated: {type: Date},
-	dateLastTested: {type: Date},
-	lastAnswerSuccessful: {type: Boolean},
-	percentSuccess: {type: Number},
-	like: {type: Number, enum: [1,2,3]},
 	level: {type: Number, enum: [1,2,3,4,5]}
 });
 

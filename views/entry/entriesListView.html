@@ -1,17 +1,32 @@
 <h1>Entries for {{dictionary.name}}</h1>
 <!--if no dictionary exists:-->
-{% if dictionary.entries.length === 0%}
+{% if entries.length === 0%}
 <p>You should create some entries first!</p>
 <!--else list them with links and have a form for a new dict at the bottom-->
 {% else %}
-{% set entries = dictionary.entries %}
-<p>There are {{entries.length}} entries in the dictionary</p>
-<ul>
-I need to store the actual entries, not just their IDs!!!
-{% for key, val in entries %}
-  <li>{{key}} = {{val.category}}</li>
-{% endfor %}
-</ul>
+  <p>There are {{entries.length}} entries in the dictionary</p>
+
+  <table class="EntryDisplayTable">
+  <tr>
+  <th>Number</th>
+  <th>{{dictionary.language1}}</th>
+  <th>{{dictionary.language2}}</th>
+  <th>Category</th>
+  <th>Level</th>
+  <th>Modify Entry</th>
+  </tr>
+  {%for key, entry in entries%}
+    <tr>
+    <td>{{key}}</td>
+    <td>{{entry.phraseL1}}</td>
+    <td>{{entry.phraseL2}}</td>
+    <td>{{entry.category}}</td>  
+    <td>{{entry.level}}</td>
+    <td><a href="#">edit</a> | <a href="#">delete</a></td>
+    </tr>
+  {% endfor %}
+  </table>
+
 {% endif %}
 
 <hr>
@@ -52,13 +67,6 @@ I need to store the actual entries, not just their IDs!!!
     </div>
 
     <div class="form-group">
-      <label for="mnemonic" class="col-sm-2 control-label">mnemonic</label>
-      <div class="col-sm-10">
-        <input name="mnemonic" type="text" class="form-control" />
-      </div>
-    </div>
-
-    <div class="form-group">
       <label for="level" class="col-sm-2 control-label">Level</label>
       <div class="col-sm-10">
         <select name="level">
@@ -69,6 +77,13 @@ I need to store the actual entries, not just their IDs!!!
           <option value="5">5</option>
         </select>
       </div>  
+    </div>
+
+    <div class="form-group">
+      <label for="mnemonic" class="col-sm-2 control-label">Mnemonic</label>
+      <div class="col-sm-10">
+        <input name="mnemonic" type="text" class="form-control" />
+      </div>
     </div>
 
     <div class="form-group">
@@ -89,4 +104,3 @@ I need to store the actual entries, not just their IDs!!!
       <button type="submit" class="btn btn-primary">submit</button>
     </div>
   </form>
-  <hr>

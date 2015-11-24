@@ -10,13 +10,15 @@ module.exports = router;
 
 // GET dictionaries/dictId
 router.get('/:dictId/listView', function (req,res,next){
-	//res.send("in dict list view");
-	//look up dict 
-	var promiseArr = []
-	return Dict.findById({_id: req.params.dictId})
-	.then(function(dict){
-		console.log("Dict with entries:" + JSON.stringify(dict));
-    	//res.send(entries);
-    	res.render('entry/entriesListView', {dictionary: dict});
-	});
+var dict = Dict.findById(req.params.dictId);
+	var entries = Entry.find({dictId: req.params.dictId})
+
+	Promise.all([dict, entries])
+	.then(function(dictEntriesArr){
+		var dict = dictEntriesArr[0];
+		var entries = dictEntriesArr[1];
+		console.log("DICT: "+ JSON.stringify(dict));
+		res.render('entry/entriesListView', {dictionary: dict, entries: entries});
+	})
+	.then(null, next);
 });
