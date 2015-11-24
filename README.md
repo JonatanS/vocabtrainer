@@ -43,10 +43,11 @@ Functionality is as follows:
 - dateCreated: (Date)
 - dateUpdated: (Date)
 - dictionary: dictId // could become array if i want to reuse entries
+- userId: (String)
 - ~~lastTested (Date)~~ //move to test
 - ~~lastAnswerSuccessful: (Boolean)~~ //move to test
 - ~~percentSuccess: (Number)~~ //move to test
-- ~~userId: (String)~~
+
 - ~~like: (Number) //0: dont test, 1: test regularly, 2: test frequently~~ //move to test
 
 ####User
