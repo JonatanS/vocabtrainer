@@ -44,11 +44,6 @@ Functionality is as follows:
 - dateUpdated: (Date)
 - dictionary: dictId // could become array if i want to reuse entries
 - userId: (String)
-- ~~lastTested (Date)~~ //move to test
-- ~~lastAnswerSuccessful: (Boolean)~~ //move to test
-- ~~percentSuccess: (Number)~~ //move to test
-
-- ~~like: (Number) //0: dont test, 1: test regularly, 2: test frequently~~ //move to test
 
 ####User
 - email
@@ -63,3 +58,12 @@ Functionality is as follows:
 - ~~[entryID]~~
 - user: string (Id)
 - private/ public
+
+####Quiz
+- entry object with the following:
+ - EntryID (ID)  
+ - lastTested (Date)
+ - lastAnswerSuccessful: (Boolean)
+ - percentSuccess: (Number)
+ - like: (Number) //0: dont test, 1: test regularly, 2: test frequently
+ - ...
