@@ -1,0 +1,11 @@
+Hallo!,Hello!,expression,1,a->e,greeting
+Auf Wiedersehen!,Good bye!,expression,1,,greeting
+rot,red,adjective,1,,colors
+grün,green,adjective,1,,colors
+blau,blue,adjective,1,,colors
+schwarz,black,adjective,1,,colors
+der Tisch,the table,noun,2,masculin,furniture
+der Stuhl,the chair,noun,2,masculin,furniture
+das Sofa,the couch,noun,2,neutral,furniture
+das Radlager,the bottom bracket,noun,4,neutral,bicycle parts
+der Lenker,the handlebar,noun,3,masculin,bicycle parts

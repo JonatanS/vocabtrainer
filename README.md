@@ -56,9 +56,15 @@ Functionality is as follows:
 ####Dictionary
 - language1
 - language2
+<<<<<<< HEAD
 - name: String
 - user: Id
 - public: boolean
+=======
+- ~~[entryID]~~
+- user: string (Id)
+- private/ public
+>>>>>>> 8fcf71f49727745f0bb0802af3e0315cb75205df
 
 ####Quiz
 - entry object with the following:

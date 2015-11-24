@@ -22,6 +22,21 @@ userSchema.virtual('fullName').get(function () {
 	return this.firstName + " " + this.lastName;
 });
 
+userSchema.statics.findOrCreate = function (userInfo) {
+
+    var self = this;
+
+    return this.findOne({ email: userInfo.email }).exec()
+        .then(function (user) {
+            if (user === null) {
+                return self.create(userInfo);
+            } else {
+                return user;
+            }
+        });
+};
+
+
 //DICTIONARY SCHEMA
 var languages = ['English', 'French', 'Spanish', 'German', 'Italian'];
 var dictSchema = new mongoose.Schema({
@@ -39,6 +54,19 @@ var dictSchema = new mongoose.Schema({
 	userId: {type: String, required: true},
 	isPublic: {type: Boolean, default: false, required: true}
 });
+
+dictSchema.statics.findOrCreate = function (dictInfo) {
+    var self = this;
+
+    return this.findOne({ name: dictInfo.name }).exec()
+        .then(function (dict) {
+            if (dict === null) {
+                return self.create(dictInfo);
+            } else {
+                return dict;
+            }
+        });
+};
 
 
 // //write method to return entries for dict from [entryIds]
@@ -75,6 +103,18 @@ entrySchema.statics.findByTag = function (tag) {
 	}).exec();
 };
 
+entrySchema.statics.findOrCreate = function (entryInfo){
+    var self = this;
+
+    return this.findOne({ userId: entryInfo.userId, phraseL1: entryInfo.phraseL1, phraseL2: entryInfo.phraseL2}).exec()
+        .then(function (dict) {
+            if (dict === null) {
+                return self.create(entryInfo);
+            } else {
+                return dict;
+            }
+        });
+};
 
 //TEST SCHEMA
 
