@@ -21,7 +21,7 @@ router.get('/emailLookup', function (req, res, next){
 	.then(function(user){
 		//grab their dicts
 		console.log(user);
-		res.redirect('/users/'+ user._id)
+		res.redirect('/users/'+ user._id);
 		return [user, Dict.find({user: user})];
 	})
 	.then(null, next);	//call next in case of error

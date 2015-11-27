@@ -1,13 +1,13 @@
 var express = require('express');
 var app = express();
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var swig = require('swig');
 require('./filters')(swig);	//returns a function from './filters': http://paularmstrong.github.io/swig/docs/filters/
 var path = require('path');
-module.exports = app;
-
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
@@ -28,6 +28,27 @@ app.use('/users', require('./routes/users'));
 app.use('/dictionaries', require('./routes/dictionaries'));
 app.use('/entries', require('./routes/entries'));
 app.use('/', require('./routes/index'));
+
+//passport stuff:
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport config
+var Account = require('./models').Account;
+//console.log(Account);
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+console.log(app);
+module.exports = app;
+
+
 
 // app.get('/', function (req, res) {
 //    res.render('index');

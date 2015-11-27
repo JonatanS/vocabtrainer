@@ -1,42 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>kuckuck!</h1>
-<!--display email form and link to sign up-->
 
-  <hr>
-  <h2>Login:</h2>
-  <form method="GET" action="/users/emailLookup">
-    <input type="text" name="email" />
-    <button type="submit">login</button>
-  </form>
-  <hr>
-  <h2>Or Sign Up:</h2>
-  <form method="POST" action="/users/add">
-    
-    <div class="form-group">
-      <label for="firstName" class="col-sm-2 control-label">First Name</label>
-      <div class="col-sm-10">
-        <input name="firstName" type="text" class="form-control"/>
-      </div>
-    </div>
+{%if !user %}
+<a href="/login" class="lead">Login</a>
+<br>
+<a href="/register" class="lead">Register</a>
+{% else %}
+<p>You are currently logged in as {{user.email}}</p>
+<a href="/logout">Logout</a>
+{%endif%}
 
-    <div class="form-group">
-      <label for="lastName" class="col-sm-2 control-label">Last Name</label>
-      <div class="col-sm-10">
-        <input name="lastName" type="text" class="form-control"/>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="email" class="col-sm-2 control-label">Email</label>
-      <div class="col-sm-10">
-        <input name="email" type="text" class="form-control"/>
-      </div>
-    </div>
-
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">register</button>
-    </div>
-  </form>
-
-  {% endblock %}
+{% endblock %}

@@ -8,8 +8,9 @@ db.on('open', function (){ console.log("Succesfully connected to DB");});
 
 
 // USER SCHEMA
-var userSchema = new mongoose.Schema({
+var userSchema = new Schema({
 	email:{type: String, required: true, unique: true},
+	//password: String,
 	firstName: {type: String, required: true},
 	lastName: {type: String, required: true},
 	dateRegistered: {type: Date, default: Date.now, required: true},
@@ -25,7 +26,6 @@ userSchema.virtual('fullName').get(function () {
 userSchema.statics.findOrCreate = function (userInfo) {
 
     var self = this;
-
     return this.findOne({ email: userInfo.email }).exec()
         .then(function (user) {
             if (user === null) {
@@ -116,6 +116,14 @@ entrySchema.statics.findOrCreate = function (entryInfo){
         });
 };
 
+var passportLocalMongoose = require('passport-local-mongoose');
+var accountSchema = new mongoose.Schema({
+    email: String,
+    password: String
+});
+
+accountSchema.plugin(passportLocalMongoose);
+
 //TEST SCHEMA
 
 
@@ -125,9 +133,11 @@ entrySchema.statics.findOrCreate = function (entryInfo){
 var User = mongoose.model('User', userSchema);
 var Entry = mongoose.model('Entry', entrySchema);
 var Dictionary = mongoose.model('Dictionary', dictSchema);
+var Account = mongoose.model('Account', accountSchema);
 
 module.exports = {
 	User: User,
 	Entry: Entry,
-	Dictionary: Dictionary
+	Dictionary: Dictionary,
+	Account: Account
 };
