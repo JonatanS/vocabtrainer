@@ -14,7 +14,12 @@ app.engine('html', swig.renderFile);
 swig.setDefaults({ cache: false });
 
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, './public')));	//__dirname = path of current file
+// statically serve front-end dependencies
+app.use('/',express.static(path.join(__dirname, '/public')));
+app.use('/bootstrap',express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
+app.use('/jquery',express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+console.log('bootstrap path: ' + path.join(__dirname, '/node_modules/bootstrap/dist'));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -22,10 +27,11 @@ app.use(bodyParser.json());
 app.use('/users', require('./routes/users'));
 app.use('/dictionaries', require('./routes/dictionaries'));
 app.use('/entries', require('./routes/entries'));
+app.use('/', require('./routes/index'));
 
-app.get('/', function (req, res) {
-   res.render('index');
-});
+// app.get('/', function (req, res) {
+//    res.render('index');
+// });
 
 //error handler in app.js (4 arguments!)
 //.then(null, next) is called in all routes!

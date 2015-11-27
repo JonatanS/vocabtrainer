@@ -31,7 +31,9 @@ Functionality is as follows:
 - get help (jokers tbd)
  
 ##Controller/ Functionality:
-- can use joker (e.g. show first letter, or indicate number of letters looking for
+- can use joker (e.g. show first letter, or indicate number of letters looking for)
+- integrate API from ... to display similar words
+- batch upload words from CSV
 
 ##models:
 ####Entry
@@ -54,17 +56,13 @@ Functionality is as follows:
 - lastDictUsedToTest: _dictId
  
 ####Dictionary
-- language1
-- language2
-<<<<<<< HEAD
+- language1: String
+- language2: String
 - name: String
 - user: Id
 - public: boolean
-=======
-- ~~[entryID]~~
 - user: string (Id)
-- private/ public
->>>>>>> 8fcf71f49727745f0bb0802af3e0315cb75205df
+- public: boolean
 
 ####Quiz
 - entry object with the following:

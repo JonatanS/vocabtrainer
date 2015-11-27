@@ -1,3 +1,5 @@
+{% extends '../layout.html' %}
+{% block content%}
 <h1>Entries for {{dictionary.name}}</h1>
 <!--if no dictionary exists:-->
 {% if entries.length === 0%}
@@ -104,3 +106,5 @@
       <button type="submit" class="btn btn-primary">submit</button>
     </div>
   </form>
+
+{% endblock %}
