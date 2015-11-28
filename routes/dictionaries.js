@@ -22,3 +22,20 @@ var dict = Dict.findById(req.params.dictId);
 	})
 	.then(null, next);
 });
+
+router.post('/add', function (req, res, next){
+
+	console.log("Dict/add Body:" + JSON.stringify(req.body));
+	return Dict.create({
+		language1: req.body.language1,
+		language2: req.body.language2,
+		name: req.body.name,
+		userId: req.body.userId
+	})
+	.then(function(dict){
+		//if successful:
+		res.render('entry/entriesListView', {dictionary: dict, entries: {}, info:{type: "successful", 
+			message:"Successfully created the new dictionary: dict.name"}});
+
+	}).then(null, next);	
+});

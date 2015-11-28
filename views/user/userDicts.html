@@ -23,29 +23,44 @@ add links to add more vocab or to start the test
 <h4>Add a new dictionary:</h4>
 {% endif %}
   <form method="POST" action="/../dictionaries/add">
-    
+  
+    <input type="hidden" name="userId" value="{{user._id.toString()}}" class="form-control">
     <div class="form-group">
-      <label for="language1" class="col-sm-2 control-label">Language to study: </label>
-      <div class="col-sm-10">
-        <input name="language1" type="text" class="form-control"/>
-      </div>
+      <label for="language1" class="col-sm-3 control-label">Language to study</label>
+      <div class="col-sm-6 form-control">
+        <select name="language1">
+          <option selected value=""></option>
+          <option value="English">English</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="Italian">Italian</option>
+          <option value="Spanish">Spanish</option>
+        </select>
+      </div>  
+    </div>
+
+        <div class="form-group">
+      <label for="language2" class="col-sm-3 control-label">Language to learn from</label>
+      <div class="col-sm-6 form-control">
+        <select name="language2">
+          <option selected value=""></option>
+          <option value="English">English</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="Italian">Italian</option>
+          <option value="Spanish">Spanish</option>
+        </select>
+      </div>  
     </div>
 
     <div class="form-group">
-      <label for="language2" class="col-sm-2 control-label">Language to learn from:</label>
-      <div class="col-sm-10">
-        <input name="language2" type="text" class="form-control"/>
-      </div>
+      <label for="name" class="col-sm-5 control-label">Name</label>
+
+        <input name="name" type="text" class="col-sm-6 form-control" placeholder="name of dictionary" />
+
     </div>
 
-    <div class="form-group">
-      <label for="dictName" class="col-sm-2 control-label">Name for the Dictionary</label>
-      <div class="col-sm-10">
-        <input name="dictName" type="text" class="form-control"/>
-      </div>
-    </div>
-
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="form-group col-sm-6 ">
       <button type="submit" class="btn btn-primary">submit</button>
     </div>
   </form>

@@ -82,7 +82,7 @@ var entrySchema = new mongoose.Schema({
 	//http://stackoverflow.com/questions/14992123/finding-a-mongodb-document-by-objectid-with-mongoose
 	userId: {type: String, required: true},
 	dictId: {type: String, required: true},
-	phraseL1: {type: String, required: true, unique: true},
+	phraseL1: {type: String, required: true},
 	phraseL2: {type: String, required: true},
 	category: {type: String, required: false, enum: ['adverb','adjective','expression','noun','sentence','verb' ]},
 	tags: [String],
@@ -116,13 +116,13 @@ entrySchema.statics.findOrCreate = function (entryInfo){
         });
 };
 
-var passportLocalMongoose = require('passport-local-mongoose');
-var accountSchema = new mongoose.Schema({
-    email: String,
-    password: String
-});
+// var passportLocalMongoose = require('passport-local-mongoose');
+// var accountSchema = new mongoose.Schema({
+//     email: String,
+//     password: String
+// });
 
-accountSchema.plugin(passportLocalMongoose);
+// accountSchema.plugin(passportLocalMongoose);
 
 //TEST SCHEMA
 
@@ -133,11 +133,11 @@ accountSchema.plugin(passportLocalMongoose);
 var User = mongoose.model('User', userSchema);
 var Entry = mongoose.model('Entry', entrySchema);
 var Dictionary = mongoose.model('Dictionary', dictSchema);
-var Account = mongoose.model('Account', accountSchema);
+//var Account = mongoose.model('Account', accountSchema);
 
 module.exports = {
 	User: User,
 	Entry: Entry,
 	Dictionary: Dictionary,
-	Account: Account
+	//Account: Account
 };

@@ -1,13 +1,17 @@
 {% extends 'layout.html' %}
-{% block content %}
+{%block content%}
 
-{%if !user %}
+<!-- {%if !user %}
 <a href="/login" class="lead">Login</a>
 <br>
 <a href="/register" class="lead">Register</a>
 {% else %}
-<p>You are currently logged in as {{user.email}}</p>
+console.log("user" + user);
+<p>You are currently logged in as {{user.username}}</p>
 <a href="/logout">Logout</a>
-{%endif%}
+{%endif%} -->
+
+<p class="lead"><a href="/users/5659f32945c7696a0a1a98f4">Jonatan Schumacher</a></p>
+<p class="lead"><a href="/users/5659f3510ae1b26c0a6c7d2d">Dani Polar</a></p>
 
 {% endblock %}

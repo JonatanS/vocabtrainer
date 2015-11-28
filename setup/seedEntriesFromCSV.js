@@ -18,9 +18,12 @@ fs.readFile('german-english-seed.csv', function(err, data){
 
 	//create new user
 	return User.findOrCreate({
-			email: 'jonatan@jschumacher.com',
-			firstName: 'Jonatan',
-			lastName: 'Schumacher'
+			// email: 'jonatan@jschumacher.com',
+			// firstName: 'Jonatan',
+			// lastName: 'Schumacher'
+			email: 'daniella.polar@gmail.com',
+			firstName: 'Daniella',
+			lastName: 'Polar'
 		})
 		.then(function(user){
 			//create new dict
