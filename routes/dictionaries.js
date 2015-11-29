@@ -7,17 +7,18 @@ var Dict = models.Dictionary;
 var Entry = models.Entry;
 module.exports = router;
 
-
 // GET dictionaries/dictId
 router.get('/:dictId/listView', function (req,res,next){
-var dict = Dict.findById(req.params.dictId);
-	var entries = Entry.find({dictId: req.params.dictId})
-
+	console.log("params:", req.params);
+	var dict = Dict.findById(req.params.dictId)
+	var entries = Entry.find({dictId: req.params.dictId});
 	Promise.all([dict, entries])
 	.then(function(dictEntriesArr){
 		var dict = dictEntriesArr[0];
 		var entries = dictEntriesArr[1];
+		//var user = dictEntriesArr[2];
 		console.log("DICT: "+ JSON.stringify(dict));
+		console.log("ENTRIES:" + JSON.stringify(entries));
 		res.render('entry/entriesListView', {dictionary: dict, entries: entries});
 	})
 	.then(null, next);

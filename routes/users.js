@@ -9,6 +9,8 @@ var Dict = models.Dictionary;
 var Entry = models.Entry;
 module.exports = router;
 
+//global variable:
+var currentUser;
 
 //TODO: THIS IS TEMPORARY FUNCTIONALITY UNTIL 
 //		PASSPORT AUTHENTICATION IS IN PLACE
@@ -54,6 +56,9 @@ router.get('/:userId', function (req, res, next){
     .then(function (info) {
         var foundUser = info[0];
         var foundDicts = info[1];
+        //set currentUser
+        currentUser = foundUser;
+        console.log("user: ", currentUser);
         res.render('user/userDicts', {
             dictionaries: foundDicts,
             user: foundUser
