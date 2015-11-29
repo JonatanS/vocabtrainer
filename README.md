@@ -29,6 +29,7 @@ Functionality is as follows:
 - chose which language to be quizzed in (l1 or l2) dropdown
 - randomly select a word from chosen tags. prompt to input translation
 - get help (jokers tbd)
+- show example sentences (http://www.macmillandictionary.com/us/live/example-sentences.html)
  
 ##Controller/ Functionality:
 - can use joker (e.g. show first letter, or indicate number of letters looking for)
