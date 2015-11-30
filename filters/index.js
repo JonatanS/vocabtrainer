@@ -7,4 +7,10 @@ module.exports = function (swig) {
     dictListLink.safe = true;
     swig.setFilter('dictListLinkFromUser', dictListLink);
 
+    var dictEntryLink = function (entry) {
+    	return '<a href="' + '/entries/' + entry._id + '/' + entry.dictId + '/delete">' + 'delete' + '</a>'
+    };
+    dictEntryLink.safe = true;
+    swig.setFilter('dictEntryLink', dictEntryLink);
+
 };

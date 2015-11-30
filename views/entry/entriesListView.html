@@ -66,7 +66,7 @@
     <td>{{entry.mnemonic}}</td> 
     <td>{{entry.tags}}</td> 
     <td>{{entry.level}}</td>
-    <td><a href="#">edit</a> | <a href="#">delete</a></td>
+    <td><a href="#">edit</a> | {{ entry | dictEntryLink}}</td>
     </tr>
   {% endfor %}
   </table>
