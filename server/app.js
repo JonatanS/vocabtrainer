@@ -8,9 +8,10 @@ var mongoose = require('mongoose');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var swig = require('swig');
-require('./filters')(swig);	//returns a function from './filters': http://paularmstrong.github.io/swig/docs/filters/
+require('../non-angular-public/filters')(swig);	//returns a function from './filters': http://paularmstrong.github.io/swig/docs/filters/
 var path = require('path');
-app.set('views', path.join(__dirname, './views'));
+console.log("dir:" + __dirname);
+app.set('views', path.join(__dirname, '../non-angular-public/views'));
 app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
 swig.setDefaults({ cache: false });
@@ -47,10 +48,10 @@ app.use('/entries', require('./routes/entries'));
 app.use('/', require('./routes/index'));
 
 // statically serve front-end dependencies
-app.use('/',express.static(path.join(__dirname, '/public')));
-app.use('/bootstrap',express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
-app.use('/jquery',express.static(path.join(__dirname, '/node_modules/jquery/dist')));
-console.log('bootstrap path: ' + path.join(__dirname, '/node_modules/bootstrap/dist'));
+app.use('/',express.static(path.join(__dirname, '../non-angular-public/public')));
+app.use('/bootstrap',express.static(path.join(__dirname, '../node_modules/bootstrap/dist')));
+app.use('/jquery',express.static(path.join(__dirname, '../node_modules/jquery/dist')));
+console.log('bootstrap path: ' + path.join(__dirname, '../node_modules/bootstrap/dist'));
 
 module.exports = app;
 
