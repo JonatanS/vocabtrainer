@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
+var models = require('../server/models');
 var Promise = require('bluebird');
 var User = models.User;
 var Dict = models.Dictionary;
@@ -18,20 +18,23 @@ fs.readFile('german-english-seed.csv', function(err, data){
 
 	//create new user
 	return User.findOrCreate({
-			email: 'jonatan@jschumacher.com',
-			firstName: 'Jonatan',
-			lastName: 'Schumacher'
-			// email: 'daniella.polar@gmail.com',
-			// firstName: 'Daniella',
-			// lastName: 'Polar'
+			// email: 'jonatan@jschumacher.com',
+			// firstName: 'Jonatan',
+			// lastName: 'Schumacher'
+			// email: 'me@gmail.com',
+			// firstName: 'Todd',
+			// lastName: 'Schultz'
+			email: 'daniella.polar@gmail.com',
+			firstName: 'Daniella',
+			lastName: 'Polar'
 		})
 		.then(function(user){
 			//create new dict
 			return Dict.findOrCreate({
 				language1: 'German',
 				language2: 'English',
-				name:'German-English',
-				userId: user._id.toString()
+				name:user.firstName + '-German-English',
+				user: user._id
 			})
 		})
 		.then(function(dict){
@@ -44,8 +47,8 @@ fs.readFile('german-english-seed.csv', function(err, data){
 				console.log("row:" ,r);
 				var values = r.split(',');
 				return {
-					userId: dict.userId,
-					dictId: dict._id.toString(),
+					user: dict.user,
+					dictionary: dict._id,
 					phraseL1: values[0],
 					phraseL2: values[1],
 					category: values[2],

@@ -24,7 +24,6 @@ userSchema.virtual('fullName').get(function () {
 });
 
 userSchema.statics.findOrCreate = function (userInfo) {
-
     var self = this;
     return this.findOne({ email: userInfo.email }).exec()
         .then(function (user) {
@@ -51,7 +50,7 @@ var dictSchema = new mongoose.Schema({
 		enum: languages
 	},
 	name: {type: String, unique: true},	//TODO write auto-naming function
-	userId: {type: String, required: true},
+	user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
 	isPublic: {type: Boolean, default: false, required: true}
 });
 
@@ -61,6 +60,7 @@ dictSchema.statics.findOrCreate = function (dictInfo) {
     return this.findOne({ name: dictInfo.name }).exec()
         .then(function (dict) {
             if (dict === null) {
+            	console.log("Creating new Dictionary for user: " + dictInfo.user);
                 return self.create(dictInfo);
             } else {
                 return dict;
@@ -80,8 +80,8 @@ dictSchema.statics.findOrCreate = function (dictInfo) {
 //ENTRY SCHEMA
 var entrySchema = new mongoose.Schema({
 	//http://stackoverflow.com/questions/14992123/finding-a-mongodb-document-by-objectid-with-mongoose
-	userId: {type: String, required: true},
-	dictId: {type: String, required: true},
+	user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+	dictionary: {type: Schema.Types.ObjectId, ref: 'Dictionary', required: true},
 	phraseL1: {type: String, required: true},
 	phraseL2: {type: String, required: true},
 	category: {type: String, required: false, enum: ['adverb','adjective','expression','noun','sentence','verb' ]},
@@ -106,7 +106,7 @@ entrySchema.statics.findByTag = function (tag) {
 entrySchema.statics.findOrCreate = function (entryInfo){
     var self = this;
 
-    return this.findOne({ userId: entryInfo.userId, phraseL1: entryInfo.phraseL1, phraseL2: entryInfo.phraseL2}).exec()
+    return this.findOne({ user: entryInfo.user, phraseL1: entryInfo.phraseL1, phraseL2: entryInfo.phraseL2}).exec()
         .then(function (dict) {
             if (dict === null) {
                 return self.create(entryInfo);
@@ -138,6 +138,5 @@ var Dictionary = mongoose.model('Dictionary', dictSchema);
 module.exports = {
 	User: User,
 	Entry: Entry,
-	Dictionary: Dictionary,
-	//Account: Account
+	Dictionary: Dictionary
 };

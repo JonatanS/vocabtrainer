@@ -1,0 +1,21 @@
+<div ng-controller="MainCtrl">
+	<h2>listing entries here. make editable and add delete function. Also add form to add new entries</h2>
+
+	<p>There are {{entries.length}} entries in the dictionary</p>
+	<div class="table-responsive">
+
+	<table class="EntryDisplayTable table table-striped">
+		<tr>
+		<th>#</th>
+		<th>{{dictionary.language1}}</th>
+		<th>{{dictionary.language2}}</th>
+		<th>Category</th>
+		<th>Mnemonic</th>
+		<th>Tags</th>
+		<th>Level</th>
+		<th>Modify Entry</th>
+		</tr>
+
+		<entry entry="singleEntry" ng-repeat="singleEntry in dictionary.entries orderBy: '-created_at' "></entry>
+	</table>
+</div>
