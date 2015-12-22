@@ -1,0 +1,60 @@
+<div  ng-controller="MainCtrl">  
+<h1>Welcome {{user.firstName}}!</h1>
+<!--
+list users dictionaries
+
+add links to add more vocab or to start the test
+-->
+<div ng-if="user.dictionaries.length > 0">
+  <h4>Choose a dictionary to work with:</h4>
+  <ul>
+  <li ng-repeat="dict in user.dictionaries"><a ui-sref="dictionary({dictionaryId: dict._id})">{{dict.name}}</a></li>
+  </ul>
+  <br><br>
+</div>
+
+<h4>Add a new dictionary:</h4>
+
+  <form method="POST" action="/../api/dictionaries/">
+    <input type="hidden" name="userId" value="{{user._id.toString()}}" class="form-control">
+    <input type="hidden" name="userName" value="{{user.firstName}}" class="form-control">
+    <div class="form-group">
+      <label for="language1" class="col-sm-3 control-label">Language to study</label>
+      <div class="col-sm-6 form-control">
+        <select name="language1">
+          <option selected value=""></option>
+          <option value="English">English</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="Italian">Italian</option>
+          <option value="Spanish">Spanish</option>
+        </select>
+      </div>  
+    </div>
+
+        <div class="form-group">
+      <label for="language2" class="col-sm-3 control-label">Language to learn from</label>
+      <div class="col-sm-6 form-control">
+        <select name="language2">
+          <option selected value=""></option>
+          <option value="English">English</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="Italian">Italian</option>
+          <option value="Spanish">Spanish</option>
+        </select>
+      </div>  
+    </div>
+
+    <div class="form-group">
+      <label for="name" class="col-sm-5 control-label">Name</label>
+
+        <input name="name" type="text" class="col-sm-6 form-control" placeholder="name of dictionary" />
+
+    </div>
+
+    <div class="form-group col-sm-6 ">
+      <button type="submit" class="btn btn-primary">submit</button>
+    </div>
+  </form>
+</div>

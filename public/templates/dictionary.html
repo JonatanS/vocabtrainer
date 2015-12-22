@@ -1,0 +1,66 @@
+<h1>Entries for {{activeDictionary.name}}</h1>
+<p ng-if="activeDictionary.entries.length == 0">You should create some entries first!</p>
+<!-- else list them with links and have a form for a new dict at the bottom -->
+<div ng-if="activeDictionary.entries.length > 0">
+  <p>This Dictionary Has {{activeDictionary.entries.length}} Entries</p>
+  <div class="table-responsive">
+
+  <table class="EntryDisplayTable table table-striped">
+  <thead>
+    <tr>
+    <th>#</th>
+    <th>{{activeDictionary.language1}}</th>
+    <th>{{activeDictionary.language2}}</th>
+    <th>Category</th>
+    <th>Mnemonic</th>
+    <th>Tags</th>
+    <th>Level</th>
+    <th>Modify Entry</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+<!--   <div ng-controller="EntryFormCtrl"> -->
+<!-- ng-submit="createEntry()" -->
+    <form name="entryFrm" >
+<!--       <input type="hidden" name="user" value="{{activeDictionary.user}}" class="form-control">
+
+      <input type="hidden" name="dictionary" value="{{activeDictionary._id}}" class="form-control"> -->
+      <th>0</th>
+      <td><input type="text" ng-model="newEntry.phraseL1" class="form-control input-sm" name="phraseL1"  /></td>
+      <td><input type="text" ng-model="newEntry.phraseL2" class="form-control input-sm" name="phraseL2" /></td>
+      <td>
+        <select name="category" class="input-sm" ng-model="newEntry.category">
+          <option selected value=""></option>
+          <option value="adverb">Adverb</option>
+          <option value="adjective">Adjective</option>
+          <option value="expression">Expression</option>
+          <option value="noun">Noun</option>
+          <option value="sentence">Sentence</option>
+          <option value="verb">Verb</option>
+        </select>
+      </td>  
+      <td><input type="text" ng-model="newEntry.mnemonic" class="form-control input-sm" name="mnemonic"/></td>
+      <td><input type="text" ng-model="newEntry.tags" class="form-control input-sm" name="tags"/></td>
+      <td>
+        <select name="level" ng-model="newEntry.level" class="input-sm">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option selected value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </td>
+      <td>
+        <button type="submit" class="btn btn-primary btn-sm" ng-click="createEntry()">submit</button>
+      </td>
+    </form>
+  <!-- </div>  -->
+  </tr>
+  
+  <!-- loop through entries as Attribute Directive: http://jsfiddle.net/Tz83w/1/ -->
+  <tr index="{{$index + 1}}" entry="theEntry" ng-repeat="theEntry in activeDictionary.entries"></tr>
+  </tbody>
+  </table>
+  </div><!-- .table-responsive -->
+  </div> <!-- if more than 0 entries -->

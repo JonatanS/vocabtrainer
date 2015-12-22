@@ -16,15 +16,24 @@
 </head>
 
 <body ng-app="vocabularyTrainer">
-<div ng-controller="main">
+<div ng-controller="MainCtrl">
 	<div ng-include="'templates/navbar.html'"></div>
-	<h1>hello world</h1>
+
+    <!-- Dynamic Templates here: -->
+    <div ui-view></div>
 
 </div> <!--main controller-->
 </body>
     <script src="/js/lib/angular.js"></script>
     <script src="/js/lib/angular-ui-router.js"></script>
     <script src="/js/angular-app.js"></script>
+    <script src="/js/factories/dictionary.factory.js"></script>
+    <script src="/js/factories/entry.factory.js"></script>
+    <script src="/js/factories/user.factory.js"></script>
     <script src="/js/controllers/main.controller.js"></script>
+    <script src="/js/controllers/dictionary.controller.js"></script>
+    <script src="/js/controllers/entryForm.controller.js"></script>
+    <script src="/js/directives/entry.directive.js"></script>
+
 </body>
 </html>

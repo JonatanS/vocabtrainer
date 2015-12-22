@@ -17,20 +17,33 @@ router.get('/', function (req, res, next) {
 
 //POST: /add new entry
 router.post('/', function (req, res, next){
-	var newEntry = Entry.create({
-		userId: req.body.userId,
-		dictId: req.body.dictId,
-		phraseL1: req.body.phraseL1,
-		phraseL2: req.body.phraseL2,
-		category: req.body.category,
-		mnemonic: req.body.mnemonic,
-		tags: req.body.tags.split(','),
-		level: req.body.level
-	});
-	//all data is updated:
-	var paramsArr = getArrayOfParams(req.body.dictId);			var dict = paramsArr[0];
-	var entries = paramsArr[1];
-	res.send(entries);
+	console.log("posting");
+	console.log(typeof req.body.user);
+	console.log(typeof req.body.dict);
+	console.log(req.body);
+	return User.findById(req.body.user)
+	.then( function (userObj) {
+		return Entry.create({
+			user: userObj,
+			dictionary: req.body.dict,
+			phraseL1: req.body.phraseL1,
+			phraseL2: req.body.phraseL2,
+			category: req.body.category,
+			mnemonic: req.body.mnemonic,
+			tags: req.body.tags ? req.body.tags.split(',') : [],
+			level: req.body.level
+		})
+		.then( function (newEntry) {
+			console.log('created: ' + JSON.stringify(newEntry));
+			res.send(newEntry);
+		})
+	})
+	// //all data is updated:
+	// var paramsArr = getArrayOfParams(req.body.dictId);	
+	// console.log(paramsArr);		
+	// var dict = paramsArr[0];
+	// var entries = paramsArr[1];
+	// res.send(entries);
 });
 
 router.delete('/:id', function (req, res, next){

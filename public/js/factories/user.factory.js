@@ -1,9 +1,11 @@
-app.factory("UserFactory", function ("$http"){
+app.factory("UserFactory", function ($http){
 	return {
 		getUsers : function (){
 			return $http.get('/api/users/')
 			.then( function (response) {
 				var users = response.data;
+				console.log("In User factory");
+				console.log(users);
 				return users;
 			});
 		},

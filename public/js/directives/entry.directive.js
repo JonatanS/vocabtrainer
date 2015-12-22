@@ -1,8 +1,11 @@
 app.directive('entry', function (){
 	return {
-		restrict: 'E',
-		templateUrl: 'templates/entry',
-		scope: { entry: '='
+		restrict: 'A',
+		templateUrl: 'templates/entry.html',
+		replace: true,
+		scope: { 
+			entry: '=',
+			index: '@'
 		}
 		//,link...
 	}
