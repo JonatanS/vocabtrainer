@@ -1,9 +1,9 @@
 # vocabtrainer
 ##To use:
-cd ../vocabtrainer
-node seedEntriesFromCSV.js
-npm install
-npm start
+- cd ../vocabtrainer
+- node seedEntriesFromCSV.js
+- npm install
+- npm start
 
 ##Description:
 This is my first promise-style node application, written after 7pm mid week, and on Sundays. So bare with me.
