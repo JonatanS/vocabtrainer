@@ -44,7 +44,7 @@ router.post('/', function (req, res, next){
 		language1: req.body.language1,
 		language2: req.body.language2,
 		name: req.body.name,
-		userId: req.body.userId
+		user: req.body.userId
 	})
 	.then(function(dict){
 		res.status(201).send(dict);

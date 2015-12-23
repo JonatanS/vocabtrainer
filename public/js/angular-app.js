@@ -21,9 +21,9 @@ app.config(function ($stateProvider){
 		}
 	});
 
-	// $stateProvider.state('entryForm', {
-	// 	url: '/entries/new',
-	// 	templateUrl: '/templates/entryForm.html',
-	// 	controller: 'EntryFormCtrl'
-	// });
+	$stateProvider.state('entryForm', {
+		url: '/entries/new',
+		templateUrl: '/templates/entryForm.html',
+		controller: 'EntryFormCtrl'
+	});
 });
