@@ -9,7 +9,8 @@ module.exports = router;
 
 
 router.get('/', function (req, res, next) {
-	var entries = Entry.find({}).select('-__v')
+	console.log(req.params);
+	var entries = Entry.find(req.params).select('-__v')
 	.then (function (entries) {
 		res.send(entries);
 	})
@@ -34,7 +35,6 @@ router.post('/', function (req, res, next){
 			level: req.body.level
 		})
 		.then( function (newEntry) {
-			console.log('created: ' + JSON.stringify(newEntry));
 			res.send(newEntry);
 		})
 	})
@@ -43,7 +43,6 @@ router.post('/', function (req, res, next){
 router.delete('/:id', function (req, res, next){
 	return Entry.findById(req.params.id)
 	.then(function(entry){
-		console.log("deleting entry:" + entry);
 		entry.remove()
 		.then(function(){
 	  		res.status(200).end();
@@ -55,9 +54,7 @@ router.delete('/:id', function (req, res, next){
 router.put('/:id', function (req, res, next){
 	return Entry.findById(req.params.id)
 	.then(function(entry){
-		console.log("in put:" + entry._id);
 		var needsSave = false;
-		console.log(req.body);
 		for (var prop in req.body.entry){
 			if(entry[prop] != req.body.entry[prop]){
 				//update if different
@@ -71,7 +68,6 @@ router.put('/:id', function (req, res, next){
 		}
 		return entry.save()
 		.then(function (entry){
-			console.log("after safe: " + JSON.stringify(entry));
 			res.send(entry);
 		}).then(null, next);
 	}).then(null, next);
@@ -84,7 +80,6 @@ function getArrayOfParams(dictId){
 	Promise.all([dict, entries])
 	.then(function(dictEntriesArr){
 		var dict = dictEntriesArr[0];
-		console.log("Dict:" + dict);
 		var entries = dictEntriesArr[1];
 		var user = User.findById(dict.userId);
 		Promise.all([dict, entries, user])

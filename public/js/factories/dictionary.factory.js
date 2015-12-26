@@ -8,5 +8,14 @@ app.factory("DictionaryFactory", function ($http){
 				return dictionary;
 			});
 		}
+		// ,
+
+		// getEntriesFiltered : function (dictId, data) {
+		// 	return $http.get('/api/dictionaries/' + dictId, data)
+		// 	.then( function (response) {
+		// 		var dictionary = response.data;
+		// 		return dictionary;
+		// 	});
+		// }
 	};
 });

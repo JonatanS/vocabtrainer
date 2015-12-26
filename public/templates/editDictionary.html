@@ -7,24 +7,27 @@
     <table id="entry-list" class="entry-list table table-hover">
       <thead>
         <tr>
-          <th>#</th>
-          <th>{{activeDictionary.language1}}</th>
-          <th>{{activeDictionary.language2}}</th>
-          <th>Category</th>
-          <th>Mnemonic</th>
-          <th>Tags</th>
-          <th>Level</th>
-          <th>Modify Entry</th>
+          <th class="col-xs-1">#</th>
+          <th class="col-xs-2">{{activeDictionary.language1}}</th>
+          <th class="col-xs-2">{{activeDictionary.language2}}</th>
+          <th class="col-xs-1"><a href="#" ng-click="sortType = 'category'; sortReverse = !sortReverse">Category<span ng-show="sortType == 'category' && !sortReverse" class="caret"></span><span ng-show="sortType == 'category' && sortReverse" class="dropup"><span class="caret"></span></span>
+          </a></th>
+          <th class="col-xs-2">Mnemonic</th>
+          <th class="col-xs-2"><div class="input-group input-group-sm"><span>
+            <input type="text" class="form-control" placeholder="Filter Tags" ng-model="searchTags">
+          </span></div></th>
+          <th class="col-xs-1"><a href="#" ng-click="sortType = 'level'; sortReverse = !sortReverse">Level<span ng-show="sortType == 'level' && !sortReverse" class="caret"></span><span ng-show="sortType == 'level' && sortReverse" class="dropup"><span class="caret"></span></span>
+          <th class="col-xs-1">Modify Entry</th>
         </tr>
       </thead>
       <tbody>
       <!-- http://stackoverflow.com/questions/34443885/angular-form-not-working-in-a-table -->
-        <tr ng-form="newEntryForm">
+        <tr ng-form="newEntryForm"class="active">
           <th>0</th>
-          <td><input type="text" ng-model="newEntry.phraseL1" class="form-control input-sm" name="phraseL1"  /></td>
-          <td><input type="text" ng-model="newEntry.phraseL2" class="form-control input-sm" name="phraseL2" /></td>
+          <td><input type="text" ng-model="newEntry.phraseL1" class="form-control" name="phraseL1"  /></td>
+          <td><input type="text" ng-model="newEntry.phraseL2" class="form-control" name="phraseL2" /></td>
           <td>
-            <select name="category" class="input-sm" ng-model="newEntry.category">
+            <select class="form-control" name="category" ng-model="newEntry.category">
               <option selected value=""></option>
               <option value="adverb">Adverb</option>
               <option value="adjective">Adjective</option>
@@ -34,10 +37,10 @@
               <option value="verb">Verb</option>
             </select>
           </td>  
-          <td><input type="text" ng-model="newEntry.mnemonic" class="form-control input-sm" name="mnemonic"/></td>
-          <td><input type="text" ng-model="newEntry.tags" class="form-control input-sm" name="tags"/></td>
+          <td><input type="text" ng-model="newEntry.mnemonic" class="form-control" name="mnemonic"/></td>
+          <td><input type="text" ng-model="newEntry.tags" class="form-control" name="tags"/></td>
           <td>
-            <select name="level" ng-model="newEntry.level" class="input-sm">
+            <select class="form-control" name="level" ng-model="newEntry.level">
               <option value="1">1</option>
               <option value="2">2</option>
               <option selected value="3">3</option>
@@ -46,12 +49,12 @@
             </select>
           </td>
           <td>
-            <button type="submit" class="btn btn-primary btn-sm" ng-click="createEntry()">submit</button>
+            <button type="submit" class="btn btn-primary" ng-click="createEntry()">add Entry</button>
           </td>
         </tr>
 
         <!-- loop through entries as Attribute Directive: http://jsfiddle.net/Tz83w/1/ -->
-        <tr index="{{$index + 1}}" entry="theEntry" ng-repeat="theEntry in activeDictionary.entries" remove="removeEntry()"> </tr>
+        <tr index="{{$index + 1}}" entry="theEntry" ng-repeat="theEntry in activeDictionary.entries | orderBy:sortType:sortReverse | filter:searchTags" remove="removeEntry()"> </tr>
       </tbody>
     </table>
   </div><!-- .table-responsive -->
