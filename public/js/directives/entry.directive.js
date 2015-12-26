@@ -19,9 +19,6 @@ app.directive('entry', function (EntryFactory){
 
 			scope.notEditable = function(){
 				if(element.attr('contenteditable')) scope.cancelEdit();
-				// element.attr('contenteditable', 'false');
-				// element.removeClass('editContent');
-				// scope.isEditable = false;
 			},
 
 			scope.update = function() {

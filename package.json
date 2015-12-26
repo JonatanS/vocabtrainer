@@ -5,8 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-css": "node-sass -w -r non-angular-public/assets/stylesheets -o non-angular-public/public/stylesheets",
-    "start": "npm run build-css & nodemon -e html,css,js server/server.js"
+    "start": "nodemon -e html,css,js server/server.js"
   },
   "repository": {
     "type": "git",
