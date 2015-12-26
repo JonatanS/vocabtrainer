@@ -21,7 +21,7 @@ router.post('/', function (req, res, next){
 	console.log(typeof req.body.user);
 	console.log(typeof req.body.dict);
 	console.log(req.body);
-	return User.findById(req.body.user)
+	return User.findById(req.body.userId)
 	.then( function (userObj) {
 		return Entry.create({
 			user: userObj,
@@ -38,30 +38,43 @@ router.post('/', function (req, res, next){
 			res.send(newEntry);
 		})
 	})
-	// //all data is updated:
-	// var paramsArr = getArrayOfParams(req.body.dictId);	
-	// console.log(paramsArr);		
-	// var dict = paramsArr[0];
-	// var entries = paramsArr[1];
-	// res.send(entries);
 });
 
 router.delete('/:id', function (req, res, next){
 	return Entry.findById(req.params.id)
 	.then(function(entry){
-		console.log("Entry to delete:" + entry);
+		console.log("deleting entry:" + entry);
 		entry.remove()
 		.then(function(){
-			// var paramsArr = getArrayOfParams(req.params.dictId);
-			// //var dict = paramsArr[0];
-			// var entries = paramsArr[1];
-			// //var user = paramsArr[2];
-	  		//res.send(entries);
-	  		res.redirect('/api/dictionaries/' + req.params.dictId);
-		})
-	.then(null, next);
-	})
-	.then(null, next);
+	  		res.status(200).end();
+		}).then(null, next);
+	}).then(null, next);
+});
+
+//update entry
+router.put('/:id', function (req, res, next){
+	return Entry.findById(req.params.id)
+	.then(function(entry){
+		console.log("in put:" + entry._id);
+		var needsSave = false;
+		console.log(req.body);
+		for (var prop in req.body.entry){
+			if(entry[prop] != req.body.entry[prop]){
+				//update if different
+				if(prop == 'tags') {
+					entry.tags = req.body.entry.tags ? req.body.entry.tags.split(',') : []
+				} else {
+					entry[prop] = req.body.entry[prop];
+				}
+				needsSave = true;
+			}
+		}
+		return entry.save()
+		.then(function (entry){
+			console.log("after safe: " + JSON.stringify(entry));
+			res.send(entry);
+		}).then(null, next);
+	}).then(null, next);
 });
 
 function getArrayOfParams(dictId){

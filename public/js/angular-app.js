@@ -10,9 +10,9 @@ app.config(function ($stateProvider){
 		//template: '<h1>HELLO ALL</h1>'
 	});
 
-	$stateProvider.state('dictionary', {
-		url: '/dictionaries/:dictionaryId',
-		templateUrl: '/templates/dictionary.html',		
+	$stateProvider.state('editDictionary', {
+		url: '/dictionaries/:dictionaryId/edit',
+		templateUrl: '/templates/editDictionary.html',		
 		controller: 'DictionaryCtrl',
 		resolve: {
 			activeDictionary: function (DictionaryFactory, $stateParams) {
@@ -21,9 +21,4 @@ app.config(function ($stateProvider){
 		}
 	});
 
-	// $stateProvider.state('entryForm', {
-	// 	url: '/entries/new',
-	// 	templateUrl: '/templates/entryForm.html',
-	// 	controller: 'EntryFormCtrl'
-	// });
 });

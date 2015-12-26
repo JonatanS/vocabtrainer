@@ -1,10 +1,15 @@
-<tr class="entry">
-	<th>{{index}}</th>
-	<td>{{entry.phraseL1}}</td>
-	<td>{{entry.phraseL2}}</td>
-	<td>{{entry.category}}</td>  
-	<td>{{entry.mnemonic}}</td> 
-	<td>{{entry.tags}}</td> 
-	<td>{{entry.level}}</td>
+<tr class="entry" ng-dblclick="editable()" ng-mouseleave="notEditable()">
+	<th class="entry-index">{{index}}</th>
+	<td class="entry-phraseL1">{{entry.phraseL1}}</td>
+	<td class="entry-phraseL2">{{entry.phraseL2}}</td>
+	<td class="entry-categroy">{{entry.category}}</td>  
+	<td class="entry-mnemonic">{{entry.mnemonic}}</td> 
+	<td class="entry-tags">{{entry.tags | tagArray}}</td> 	<!--tagArray filter-->
+	<td class="entry-level">{{entry.level}}</td>
 <!-- 	    <td><a href="#">edit</a> | {{ entry | dictEntryLink}}</td> -->
+	<td><button class="btn btn-danger btn-xs" type="button" ng-model="entry" ng-click="remove()" title="delete Entry"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+
+	<button ng-if="isEditable" class="btn btn-success btn-xs" type="button" ng-model="entry" ng-click="update()" title="save edit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+
+	<button ng-if="isEditable" class="btn btn-default btn-xs" type="button" ng-model="entry" ng-click="cancelEdit()" title="cancel edit"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
 </tr>

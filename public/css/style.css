@@ -1,0 +1,19 @@
+body {
+  padding: 55px 30px;
+  /*min-width: -webkit-min-content;*/ }
+
+/*.centered {
+	text-align: center;
+	margin: auto;
+}
+*/
+
+
+.table#entry-list > tbody > tr.editContent {
+	color: #86c5da;
+	font-style: italic;
+	font-size: 1.3em;
+	border: 2px dotted #ccc;
+	height: 60px;
+	vertical-align: middle !important;	
+}

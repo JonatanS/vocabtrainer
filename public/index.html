@@ -4,20 +4,21 @@
   <title>VocabularyTrainer</title>
   <head>
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">    
+<!--     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">   -->  
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <link href="/stylesheets/style.css" rel="stylesheet">
     <!-- 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="/favicon.ico" type="image/x-icon"> 
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> 
   -->
   <link rel="shortcut icon" href="images/glyphicons-341-globe.png">
 </head>
 
 <body ng-app="vocabularyTrainer">
 <div ng-controller="MainCtrl">
-	<div ng-include="'templates/navbar.html'"></div>
+    <div ng-include="'templates/navbar.html'"></div>
 
     <!-- Dynamic Templates here: -->
     <div ui-view></div>
@@ -27,6 +28,7 @@
     <script src="/js/lib/angular.js"></script>
     <script src="/js/lib/angular-ui-router.js"></script>
     <script src="/js/angular-app.js"></script>
+    <script src="/js/filters/filters.js"></script>
     <script src="/js/factories/dictionary.factory.js"></script>
     <script src="/js/factories/entry.factory.js"></script>
     <script src="/js/factories/user.factory.js"></script>
@@ -34,6 +36,7 @@
     <script src="/js/controllers/dictionary.controller.js"></script>
     <script src="/js/controllers/entryForm.controller.js"></script>
     <script src="/js/directives/entry.directive.js"></script>
+    <link href="/css/style.css" rel="stylesheet" type='text/css'>
 
 </body>
 </html>

@@ -8,7 +8,13 @@ add links to add more vocab or to start the test
 <div ng-if="user.dictionaries.length > 0">
   <h4>Choose a dictionary to work with:</h4>
   <ul>
-  <li ng-repeat="dict in user.dictionaries"><a ui-sref="dictionary({dictionaryId: dict._id})">{{dict.name}}</a></li>
+  <li ng-repeat="dict in user.dictionaries">
+    <span>{{dict.name}}
+    <button type="submit" class="btn btn-danger btn-sm">Practice</button>
+    <button type="submit" class="btn btn-primary btn-sm" ui-sref="editDictionary({dictionaryId: dict._id})">Edit Dict</button>
+      
+    </span>
+  </li>
   </ul>
   <br><br>
 </div>
