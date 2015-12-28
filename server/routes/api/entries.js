@@ -52,6 +52,7 @@ router.delete('/:id', function (req, res, next){
 
 //update entry
 router.put('/:id', function (req, res, next){
+	console.log(req.body.entry);
 	return Entry.findById(req.params.id)
 	.then(function(entry){
 		var needsSave = false;

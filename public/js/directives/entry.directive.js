@@ -10,59 +10,62 @@ app.directive('entry', function (EntryFactory){
 			
 		},
 		link: function (scope, element) {
-			scope.editable = function(){
-				//element is jQuery element
-				element.attr('contenteditable','true');
-				element.addClass('editContent');
-				scope.isEditable = true;
-			},
-
-			scope.readWrite = function(){
-				console.log("dblc");
-				element.removeAttr('readonly');
-				console.log(element);
-
+			scope.onDoubleclick = function(){
+				console.log("DBL!");
+				scope.isEditable = !scope.isEditable;
+				scope.formId = element.id;
+				if(scope.isEditable) {
+					//store state of entry before editing in case we need to reset it
+					angular.copy(scope.entry, scope.previousEntry);
+				}
 			},
 
 			scope.onChange = function(){
 				console.log("Dirty");
-				element.addClass('editContent');
-				scope.isEditable = true;
-			},
-
-			scope.notEditable = function(){
-				if(element.attr('contenteditable')) scope.cancelEdit();
+				scope.hasChanged = true;
+				element.addClass("success");	//color bootstrap green
 			},
 
 			scope.update = function() {
+				console.log("Updating: ");
 				console.log(scope.entry);
-				console.log("Updating: ", $(element).children("td.entry-phraseL1").children("input").val());
 				EntryFactory.update({
 					phraseL1: $(element).children("td.entry-phraseL1").children("input").val(),
-					phraseL2: $(element).children("td.entry-phraseL2").html(),
-					category: $(element).children("td.entry-category").html(),
-					tags: $(element).children("td.entry-tags").html(),
-					mnemonic: $(element).children("td.entry-mnemonic").html(),
-					level: $(element).children("td.entry-level").html(),
+					phraseL2: scope.entry.phraseL2,
+					category: scope.entry.category,
+					tags: scope.entry.tags.toString(),	//need to convert array to string
+					mnemonic: scope.entry.mnemonic,
+					level: scope.entry.level,
 					_id: scope.entry._id
-				})
-
+				}).then(function(){
+					scope.resetForm(form); //reset input form
+				});
 			},
 
 			scope.cancelEdit = function (form) {
-				element.attr('contenteditable', 'false');
-				element.removeClass('editContent');
 				scope.isEditable = false;
-				//reset input form:
+				scope.hasChanged = false;
+				scope.resetForm(form); //reset input form
+    			angular.copy(scope.previousEntry, scope.entry); //reset scope.entry with old entry
+    			scope.previousEntry = {};
+
+			},
+
+			scope.resetForm = function (form) {
 				if(form){
 	      			form.$setPristine();
 	      			form.$setUntouched();
+					element.removeClass("success");	//color bootstrap green
+					//http://htmlasks.com/how_do_i_reset_input_autocomplete_styles
+	      			//form.reset();//not working since i am using ng-form and not form
     			};
-
-    			//TODO: load old entry:
 			},
 
-			scope.isEditable = false;
+			//todo: auto-list tags: http://jsfiddle.net/sebmade/swfjT/
+
+			scope.isEditable = false,
+			scope.hasChanged = false,
+			scope.previousEntry = {}
 		}
 	}
 });

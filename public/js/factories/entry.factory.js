@@ -17,6 +17,8 @@ app.factory('EntryFactory', function ($http){
 		},
 
 		update: function (entry) {
+			console.log("factory:");
+			console.log(entry);
 			return $http.put('/api/entries/' + entry._id, {entry: entry})
 			.then (function (response){
 				return response.data;

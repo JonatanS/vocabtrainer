@@ -17,3 +17,10 @@ body {
 	height: 60px;
 	vertical-align: middle !important;	
 }
+
+.newEntryLabel {
+	float: right;
+}
+/*.ng-dirty {
+    background: #C0D9AF;
+}*/
