@@ -24,3 +24,14 @@ body {
 /*.ng-dirty {
     background: #C0D9AF;
 }*/
+
+.practice-card {
+	width: 60%;
+	height: 400px;
+	margin: 0 auto;
+	margin-top: 40px;
+	border: 1px solid black;
+	font-family: Helvetica;
+	padding: 50px;
+	box-shadow: 3px 4px 5px 1px #6b6b6b;
+}

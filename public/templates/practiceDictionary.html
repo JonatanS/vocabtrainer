@@ -1,0 +1,17 @@
+<h1>Practice your vocabulary in {{activeDictionary.name}}</h1>
+<p>This Dictionary Has {{activeDictionary.entries.length}} Entries</p>
+TODO: pick entries to practice (entire dict, by tag, level, cateogry, date..)
+<br/>
+<div class="practice-card">
+	<h3>translate the following into {{activeDictionary.language1}}:</h3>
+	<h2>{{currentPhrase.phraseL2}}</h2>
+	<form class="form-inline" ng-submit="evaluateSubmission()">
+		<div class="form-group">
+			<label class="sr-only" for="cardAnswer">Answer</label>
+    		<input type="text" class="form-control" id="practice-card-answer" placeholder="Your Answer" ng-model="submission.answer">
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+
+	{{activeDictionary}}
+</div>

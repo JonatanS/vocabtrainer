@@ -21,4 +21,15 @@ app.config(function ($stateProvider){
 		}
 	});
 
+	$stateProvider.state('practiceDictionary', {
+		url: '/dictionaries/:dictionaryId/practice',
+		templateUrl: '/templates/practiceDictionary.html',		
+		controller: 'DictionaryCtrl',
+		resolve: {
+			activeDictionary: function (DictionaryFactory, $stateParams) {
+				return DictionaryFactory.getEntries($stateParams.dictionaryId);
+			}
+		}
+	});
+
 });
