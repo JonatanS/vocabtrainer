@@ -1,4 +1,4 @@
-<tr class="entry" ng-form="editEntryForm">
+<!-- <tr class="entry" ng-dblclick="editable()" ng-mouseleave="notEditable()" ng-form="editEntryForm">
 	<th class="entry-index">{{index}}</th>
           <td class="entry-phraseL1"><input type="text" ng-model="entry.phraseL1" class="form-control" name="phraseL1"  readonly="true" ondblclick="this.readOnly='';" ng-change="onChange()"/></td>
 	<td class="entry-phraseL2">{{entry.phraseL2}}</td>
@@ -13,4 +13,4 @@
 
 		<button ng-if="isEditable" class="btn btn-default btn-xs" type="button" ng-model="entry" ng-click="cancelEdit(editEntryForm)" title="cancel edit"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 	</td>
-</tr>
+</tr> -->

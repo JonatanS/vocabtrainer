@@ -17,17 +17,29 @@ app.directive('entry', function (EntryFactory){
 				scope.isEditable = true;
 			},
 
+			scope.readWrite = function(){
+				console.log("dblc");
+				element.removeAttr('readonly');
+				console.log(element);
+
+			},
+
+			scope.onChange = function(){
+				console.log("Dirty");
+				element.addClass('editContent');
+				scope.isEditable = true;
+			},
+
 			scope.notEditable = function(){
 				if(element.attr('contenteditable')) scope.cancelEdit();
 			},
 
 			scope.update = function() {
 				console.log(scope.entry);
-				console.log(element);
-				console.log($(element).children("td.entry-phraseL1").html());
+				console.log("Updating: ", $(element).children("td.entry-phraseL1").children("input").val());
 				EntryFactory.update({
-					phraseL1: $(element).children("td.entry-phraseL1").html(),
-					phraseL2: $(element).children("td.entry-phraseL1").html(),
+					phraseL1: $(element).children("td.entry-phraseL1").children("input").val(),
+					phraseL2: $(element).children("td.entry-phraseL2").html(),
 					category: $(element).children("td.entry-category").html(),
 					tags: $(element).children("td.entry-tags").html(),
 					mnemonic: $(element).children("td.entry-mnemonic").html(),
@@ -37,10 +49,17 @@ app.directive('entry', function (EntryFactory){
 
 			},
 
-			scope.cancelEdit = function () {
+			scope.cancelEdit = function (form) {
 				element.attr('contenteditable', 'false');
 				element.removeClass('editContent');
 				scope.isEditable = false;
+				//reset input form:
+				if(form){
+	      			form.$setPristine();
+	      			form.$setUntouched();
+    			};
+
+    			//TODO: load old entry:
 			},
 
 			scope.isEditable = false;

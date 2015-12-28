@@ -1,6 +1,5 @@
 app.controller("DictionaryCtrl", function ($scope, activeDictionary, EntryFactory) {
 	$scope.activeDictionary = activeDictionary;
-
 	$scope.newEntry = {
 		//set user and dict variables
 		userId : activeDictionary.user,
