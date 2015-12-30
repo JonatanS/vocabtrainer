@@ -27,11 +27,44 @@ body {
 
 .practice-card {
 	width: 60%;
-	height: 400px;
+	height: 250px;
 	margin: 0 auto;
-	margin-top: 40px;
+	margin-top: 20px;
 	border: 1px solid black;
-	font-family: Helvetica;
-	padding: 50px;
+	padding: 30px;
+	border-radius: 7px;
 	box-shadow: 3px 4px 5px 1px #6b6b6b;
+}
+
+.practice-card .form-inline .form-control {
+	width: 100%;
+}
+
+/*#failure-alert a {
+	color: #a94442;
+	border-radius: 4px;
+}*/
+
+.ScoreBoard {
+	width: 300px;
+	height: 80px;
+	border: 1px solid;
+	border-color: gray;
+	font-family: Helvetica;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 12px;
+	border-radius: 7px;
+	box-shadow: 3px 4px 5px 1px #6b6b6b;
+}
+
+.ScoreBoard p, h5, h4 {
+	display: inline;
+}
+
+.ScoreBoard > .correctScore {
+	text-align: left;
+}
+.ScoreBoard > .correctScore {
+	text-align: right;
 }

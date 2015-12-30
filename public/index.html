@@ -17,6 +17,7 @@
 <body ng-app="vocabularyTrainer">
 <div ng-controller="MainCtrl">
     <div ng-include="'templates/navbar.html'"></div>
+    <div ng-include="'templates/quizStats.html'"></div>
 
     <!-- Dynamic Templates here: -->
     <div ui-view></div>
@@ -30,8 +31,10 @@
     <script src="/js/factories/dictionary.factory.js"></script>
     <script src="/js/factories/entry.factory.js"></script>
     <script src="/js/factories/user.factory.js"></script>
+    <script src="/js/factories/score.factory.js"></script>
     <script src="/js/controllers/main.controller.js"></script>
     <script src="/js/controllers/dictionary.controller.js"></script>
+    <script src="/js/controllers/quiz.controller.js"></script>
     <script src="/js/directives/entry.directive.js"></script>
     <link href="/css/style.css" rel="stylesheet" type='text/css'>
 

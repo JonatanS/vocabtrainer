@@ -1,5 +1,10 @@
-app.controller("DictionaryCtrl", function ($scope, activeDictionary, EntryFactory) {
+app.controller("DictionaryCtrl", function ($scope, activeDictionary, EntryFactory, ScoreFactory) {
 	$scope.activeDictionary = activeDictionary;
+
+	//////////////////////////////////////////////////////////////////
+	//EDIT DICT METHODS:
+	//////////////////////////////////////////////////////////////////
+
 	$scope.newEntry = {
 		//set user and dict variables
 		userId : activeDictionary.user,
@@ -31,35 +36,66 @@ app.controller("DictionaryCtrl", function ($scope, activeDictionary, EntryFactor
 			});
 	};
 
+
+	//////////////////////////////////////////////////////////////////
+	//QUIZ METHODS:
+	//////////////////////////////////////////////////////////////////
+
 	//randomly pick a phrase to translate:
-	$scope.pickPhraseToQuiz = function(random) {
+	$scope.setPhraseToQuiz = function(random) {
 		if(!$scope.idx && $scope.idx!==0) $scope.idx = -1;
 		if(random) {
 			$scope.idx = Math.floor((Math.random() * $scope.entriesToQuiz.length - 1) + 1);
 		}
 		else {
-			console.log($scope.idx);
 			$scope.idx = ($scope.idx < $scope.entriesToQuiz.length - 2 ? $scope.idx+1 : 0);
-			console.log($scope.idx);
 		}
 		$scope.currentPhrase = $scope.entriesToQuiz[$scope.idx];
-		console.log($scope.currentPhrase);
+		ScoreFactory.numQuestionsAsked++;
+		console.log($scope);
 	};
 
 	$scope.evaluateSubmission = function(){
-		console.log($scope.submission.answer);
+		if($scope.submission.answer === $scope.currentPhrase.phraseL1) {
+			ScoreFactory.correct ++;
+			$scope.alert.show = true;
+			$scope.alert.success = true;
+		}
+		else {
+			ScoreFactory.incorrect ++;
+			$scope.alert.show = true;
+			$scope.alert.failure = true;
+		}
 		$scope.submission.answer = null;
-		$scope.pickPhraseToQuiz(false);
+		$scope.setPhraseToQuiz($scope.randomMode);
+	};
+
+	$scope.skipQuestion = function(){
+		$scope.submission.answer = null;
+		ScoreFactory.incorrect ++;
+		ScoreFactory.numQuestionsSkipped ++;
+		$scope.setPhraseToQuiz($scope.randomMode);
 	};
 
 	$scope.setEntriesToQuiz = function(selectionCriteria) {
 		//TODO: filter selection based on criteria. for now take entire dict:
 		$scope.entriesToQuiz = angular.copy($scope.activeDictionary.entries);
-		console.log("Entries to quiz:");
-		console.log($scope.entriesToQuiz);
-	}
+	};
+
+	$scope.toggleRandom = function () {
+		$scope.randomMode = ! $scope.randomMode;
+		console.log($scope.randomMode);
+		if($scope.randomMode) $("#randomModeBtn").addClass("active");
+		else $("#randomModeBtn").removeClass("active");
+	};
 
 	$scope.setEntriesToQuiz({});
-	$scope.pickPhraseToQuiz(false);
+	$scope.setPhraseToQuiz(false);
+	$scope.randomMode = false;
+	$scope.alert = {
+			show : false,
+		success : false,
+		failure : false
+	};
 
 });
