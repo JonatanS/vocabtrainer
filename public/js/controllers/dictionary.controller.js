@@ -1,4 +1,4 @@
-app.controller("DictionaryCtrl", function ($scope, activeDictionary, EntryFactory, ScoreFactory) {
+app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, EntryFactory, ScoreFactory) {
 	$scope.activeDictionary = activeDictionary;
 
 	//////////////////////////////////////////////////////////////////
@@ -52,19 +52,16 @@ app.controller("DictionaryCtrl", function ($scope, activeDictionary, EntryFactor
 		}
 		$scope.currentPhrase = $scope.entriesToQuiz[$scope.idx];
 		ScoreFactory.numQuestionsAsked++;
-		console.log($scope);
 	};
 
 	$scope.evaluateSubmission = function(){
 		if($scope.submission.answer === $scope.currentPhrase.phraseL1) {
 			ScoreFactory.correct ++;
-			$scope.alert.show = true;
-			$scope.alert.success = true;
+			showAlert(true);
 		}
 		else {
 			ScoreFactory.incorrect ++;
-			$scope.alert.show = true;
-			$scope.alert.failure = true;
+			showAlert(false);
 		}
 		$scope.submission.answer = null;
 		$scope.setPhraseToQuiz($scope.randomMode);
@@ -89,11 +86,28 @@ app.controller("DictionaryCtrl", function ($scope, activeDictionary, EntryFactor
 		else $("#randomModeBtn").removeClass("active");
 	};
 
+	var showAlert = function (success) {
+		if (success) {
+			$scope.alert.failure = false;
+			$scope.alert.success = true;
+		}
+		else {
+			$scope.alert.failure = true;
+			$scope.alert.success = false;
+		}
+		$scope.alert.show = true;
+		//display alert for 1 sec:
+		$timeout(function() {
+		    $scope.alert.show = false;
+		}, 1000);
+
+	}
+
 	$scope.setEntriesToQuiz({});
 	$scope.setPhraseToQuiz(false);
 	$scope.randomMode = false;
 	$scope.alert = {
-			show : false,
+		show : false,
 		success : false,
 		failure : false
 	};
