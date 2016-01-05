@@ -63,7 +63,6 @@ app.use('/api', require('./routes/api/index'));
 app.use('/',express.static(path.join(__dirname, '../non-angular-public/public')));
 app.use('/bootstrap',express.static(path.join(__dirname, '../node_modules/bootstrap/dist')));
 app.use('/jquery',express.static(path.join(__dirname, '../node_modules/jquery/dist')));
-console.log('bootstrap path: ' + path.join(__dirname, '../node_modules/bootstrap/dist'));
 
 module.exports = app;
 

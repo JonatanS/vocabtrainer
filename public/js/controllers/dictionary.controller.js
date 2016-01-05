@@ -1,4 +1,4 @@
-app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, EntryFactory, ScoreFactory) {
+app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, EntryFactory, QuizFactory, LookupFactory) {
 	$scope.activeDictionary = activeDictionary;
 
 	//////////////////////////////////////////////////////////////////
@@ -48,19 +48,21 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 			$scope.idx = Math.floor((Math.random() * $scope.entriesToQuiz.length - 1) + 1);
 		}
 		else {
-			$scope.idx = ($scope.idx < $scope.entriesToQuiz.length - 2 ? $scope.idx+1 : 0);
+			$scope.idx = ($scope.idx < $scope.entriesToQuiz.length - 1 ? $scope.idx+1 : 0);
 		}
 		$scope.currentPhrase = $scope.entriesToQuiz[$scope.idx];
-		ScoreFactory.numQuestionsAsked++;
+		$scope.hint.show = false;
+		console.log($scope.currentPhrase);
+		QuizFactory.numQuestionsAsked++;
 	};
 
 	$scope.evaluateSubmission = function(){
 		if($scope.submission.answer === $scope.currentPhrase.phraseL1) {
-			ScoreFactory.correct ++;
+			QuizFactory.correct ++;
 			showAlert(true);
 		}
 		else {
-			ScoreFactory.incorrect ++;
+			QuizFactory.incorrect ++;
 			showAlert(false);
 		}
 		$scope.submission.answer = null;
@@ -69,9 +71,49 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 
 	$scope.skipQuestion = function(){
 		$scope.submission.answer = null;
-		ScoreFactory.incorrect ++;
-		ScoreFactory.numQuestionsSkipped ++;
+		QuizFactory.incorrect ++;
+		QuizFactory.numQuestionsSkipped ++;
 		$scope.setPhraseToQuiz($scope.randomMode);
+	};
+
+	$scope.showHint = function(hintType) {
+		//numLetters
+		if (hintType === "numLetters") {
+			$scope.hint.value = $scope.currentPhrase.phraseL1.length;
+		}
+		//numWords
+		else if (hintType === "numWords") {
+			$scope.hint.value = $scope.currentPhrase.phraseL1.split(" ").length;
+		}
+		//firstLetter
+		else if (hintType === "firstLetter") {
+			$scope.hint.value = $scope.currentPhrase.category === "noun" ? $scope.currentPhrase.phraseL1.split(" ")[1][0] : $scope.currentPhrase.phraseL1[0];
+		}
+
+		//gender (for nouns)
+		else if (hintType === "gender") {
+			$scope.hint.value = $scope.currentPhrase.phraseL1.split(" ")[0];
+		}
+		//vowels
+		else if (hintType === "vowels") {
+			//regex replace filter "_"
+			$scope.hint.value = $scope.currentPhrase.phraseL1.replace(/[^aeiou!%&@?,.';:"\s]/g, '_');
+		}
+		//solution
+		else if (hintType === "solution") {
+			$scope.hint.value = $scope.currentPhrase.phraseL1
+		}
+
+		else if (hintType === "example") {
+			return LookupFactory.getGlosbePhrases($scope.currentPhrase.phraseL1, $scope.activeDictionary.language1, $scope.activeDictionary.language2)
+			.then( function (response) {
+				console.log(response);
+				$scope.example.value = response.examples[0].first;
+			})
+		}
+		$scope.hint.type = hintType;
+		$scope.hint.show = true;
+
 	};
 
 	$scope.setEntriesToQuiz = function(selectionCriteria) {
@@ -96,20 +138,30 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 			$scope.alert.success = false;
 		}
 		$scope.alert.show = true;
-		//display alert for 1 sec:
 		$timeout(function() {
 		    $scope.alert.show = false;
-		}, 1000);
+		}, 3000);
 
 	}
 
-	$scope.setEntriesToQuiz({});
-	$scope.setPhraseToQuiz(false);
 	$scope.randomMode = false;
 	$scope.alert = {
 		show : false,
 		success : false,
 		failure : false
 	};
+	$scope.hint = {
+		show : false,
+		value: ""
+	};
+	$scope.submission = {
+		answer: null
+	};
+	$scope.example = {
+		value: "",
+		show. false
+	}
+	$scope.setEntriesToQuiz({});
+	$scope.setPhraseToQuiz(false);
 
 });

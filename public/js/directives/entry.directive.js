@@ -26,7 +26,7 @@ app.directive('entry', function (EntryFactory){
 				element.addClass("success");	//color bootstrap green
 			},
 
-			scope.update = function() {
+			scope.update = function(form) {
 				console.log("Updating: ");
 				console.log(scope.entry);
 				EntryFactory.update({
@@ -43,8 +43,6 @@ app.directive('entry', function (EntryFactory){
 			},
 
 			scope.cancelEdit = function (form) {
-				scope.isEditable = false;
-				scope.hasChanged = false;
 				scope.resetForm(form); //reset input form
     			angular.copy(scope.previousEntry, scope.entry); //reset scope.entry with old entry
     			scope.previousEntry = {};
@@ -52,12 +50,12 @@ app.directive('entry', function (EntryFactory){
 			},
 
 			scope.resetForm = function (form) {
+				scope.isEditable = false;
+				scope.hasChanged = false;
 				if(form){
 	      			form.$setPristine();
 	      			form.$setUntouched();
 					element.removeClass("success");	//color bootstrap green
-					//http://htmlasks.com/how_do_i_reset_input_autocomplete_styles
-	      			//form.reset();//not working since i am using ng-form and not form
     			};
 			},
 

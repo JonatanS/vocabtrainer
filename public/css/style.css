@@ -7,7 +7,25 @@ body {
 	margin: auto;
 }
 */
+.no-padding {
+	padding: 5px;
+}
 
+.hint-gender {
+	color: #b77600;
+}
+.hint-letters {
+	color: #cc8400;
+}
+.hint-words {
+	color: #d19019;
+}
+.hint-first-letter {
+	color: #d69c32;
+}
+.hint-vowels {
+	color: #dba84c;
+}
 
 .table#entry-list > tbody > tr.editContent {
 	color: #86c5da;
@@ -25,8 +43,21 @@ body {
     background: #C0D9AF;
 }*/
 
+.practice-response-field {
+	width: 600px;
+	height: 150px;
+	margin: 0 auto;
+	margin-top: 20px;
+	font-style: italic;
+	/*border: 1px solid black;*/
+	/*padding: 30px;*/
+	/*border-radius: 7px;*/
+	/*box-shadow: 3px 4px 5px 1px #6b6b6b;*/
+	/*background-color: #d3d3d3;*/
+}
+
 .practice-card {
-	width: 60%;
+	width: 600px;
 	height: 250px;
 	margin: 0 auto;
 	margin-top: 20px;
@@ -34,10 +65,17 @@ body {
 	padding: 30px;
 	border-radius: 7px;
 	box-shadow: 3px 4px 5px 1px #6b6b6b;
+	background-color: #d3d3d3;
 }
 
 .practice-card .form-inline .form-control {
 	width: 100%;
+}
+
+ .hint-btns {
+	margin: 10px 15px 10px -10px;
+	border: #a9a9a9 solid 1px;
+	border-radius: 5px;
 }
 
 .ScoreBoard {

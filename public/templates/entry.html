@@ -9,7 +9,7 @@
 	<td>
 		<button class="btn btn-danger btn-xs" type="button" ng-model="entry" ng-click="remove()" title="delete Entry"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
 
-		<button ng-if="hasChanged" class="btn btn-success btn-xs" type="button" ng-model="entry" ng-click="update()" title="save edit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+		<button ng-if="hasChanged" class="btn btn-success btn-xs" type="button" ng-model="entry" ng-click="update(editEntryForm)" title="save edit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
 
 		<button ng-if="hasChanged" class="btn btn-default btn-xs" type="button" ng-model="entry" ng-click="cancelEdit(editEntryForm)" title="cancel edit"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 	</td>

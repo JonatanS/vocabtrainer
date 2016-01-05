@@ -1,4 +1,4 @@
-app.factory("ScoreFactory", function(){
+app.factory("QuizFactory", function(){
 	return {
 		correct: 0,
 		incorrect: 0,
