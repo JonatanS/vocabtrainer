@@ -1,7 +1,4 @@
 var express = require('express');
-// var mongoose = require ('mongoose');
-// var Schema = mongoose.Schema,
-//     ObjectId = Schema.ObjectId;
 var router = express.Router();
 var models = require('../../../server/models');
 var Promise = require('bluebird');

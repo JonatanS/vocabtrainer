@@ -34,15 +34,16 @@ TODO: pick entries to practice (entire dict, by tag, level, cateogry, date..)
 
 			<button type="button" ng-click="showHint('solution')" class="btn btn-default btn-sm" title="show solution"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
 
-			<button type="button" ng-click="showHint('example')" class="btn btn-default btn-sm" title="show example"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+			<button type="button" ng-click="getExamples()" class="btn btn-default btn-sm" title="show example"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
 		</div>
 	</div>
 </div>
 <div class="practice-response-field">
 	<div class="row">
-	<div class="alert alert-info alert-dismissible animate-hide" role="alert" ng-show="alert.example && example.show">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  		{example.value}
+	<div class="alert alert-info alert-dismissible animate-hide" role="alert" ng-show="example.show">
+	<button type="button" class="close" ng-click="getExamples()" class="btn btn-info btn-xs" title="show example"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+  		{{example.value}}
+<!--     <a class="alert-link" href="#">more examples</a> -->
 	</div>
 	</div>
 	<div class="alert alert-success alert-dismissible animate-hide" role="alert" ng-show="alert.success && alert.show">

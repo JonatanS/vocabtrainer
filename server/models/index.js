@@ -68,15 +68,6 @@ dictSchema.statics.findOrCreate = function (dictInfo) {
         });
 };
 
-
-// //write method to return entries for dict from [entryIds]
-// dictSchema.method.getEntries = function (){
-// 	return Entry.find({
-// 	        _id: {$in: this.entries}
-// 	}).exec();
-// };
-
-
 //ENTRY SCHEMA
 var entrySchema = new mongoose.Schema({
 	//http://stackoverflow.com/questions/14992123/finding-a-mongodb-document-by-objectid-with-mongoose
@@ -116,27 +107,37 @@ entrySchema.statics.findOrCreate = function (entryInfo){
         });
 };
 
-// var passportLocalMongoose = require('passport-local-mongoose');
-// var accountSchema = new mongoose.Schema({
-//     email: String,
-//     password: String
-// });
 
-// accountSchema.plugin(passportLocalMongoose);
+//QUIZ SCHEMAS
+var quizSchema = new mongoose.Schema({
+	dictionary: {type: Schema.Types.ObjectId, ref: 'Dictionary', required: true},
+	name: {type: String, required: true},
+	filter: {type: String, required: false}
+});
 
-//TEST SCHEMA
-
-
+var quizEntrySchema = new mongoose.Schema({
+	quiz: {type: Schema.Types.ObjectId, ref: 'Quiz', required: true},
+	entry: {type: Schema.Types.ObjectId, ref: 'Entry', required: true},
+	mute: {type: Boolean, default: false},
+	dateLastTested: {type: Date},
+	numAttempts: {type: Number, default: 0},
+	avgScore: {type: Number, default: 0},
+	lastScore: {type: Number, default: 0}
+});
 
 
 //EXPORT MODELS
 var User = mongoose.model('User', userSchema);
 var Entry = mongoose.model('Entry', entrySchema);
 var Dictionary = mongoose.model('Dictionary', dictSchema);
+var Quiz = mongoose.model('Quiz', quizSchema);
+var QuizEntry = mongoose.model('QuizEntry', quizEntrySchema);
 //var Account = mongoose.model('Account', accountSchema);
 
 module.exports = {
 	User: User,
 	Entry: Entry,
-	Dictionary: Dictionary
+	Dictionary: Dictionary,
+	Quiz: Quiz,
+	QuizEntry: QuizEntry
 };

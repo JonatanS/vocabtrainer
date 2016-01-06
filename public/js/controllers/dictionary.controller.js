@@ -103,14 +103,6 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 		else if (hintType === "solution") {
 			$scope.hint.value = $scope.currentPhrase.phraseL1
 		}
-
-		else if (hintType === "example") {
-			return LookupFactory.getGlosbePhrases($scope.currentPhrase.phraseL1, $scope.activeDictionary.language1, $scope.activeDictionary.language2)
-			.then( function (response) {
-				console.log(response);
-				$scope.example.value = response.examples[0].first;
-			})
-		}
 		$scope.hint.type = hintType;
 		$scope.hint.show = true;
 
@@ -128,6 +120,35 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 		else $("#randomModeBtn").removeClass("active");
 	};
 
+	$scope.getExamples = function () {
+		$scope.example.show = true;
+		if ($scope.example.examples.length === 0 && $scope.example.idx === -1) {
+			//grab examples from API and populate .examples array:
+			return LookupFactory.getGlosbePhrases($scope.currentPhrase.phraseL1,$scope.activeDictionary.language1, $scope.activeDictionary.language2)
+			.then( function (response) {
+				$scope.example.examples = response.examples.map(function (e) {
+					console.log(e.first.replace(/<.*?>/g,''));
+					return e.first.replace(/<.*?>/g,'');
+				});
+				selectExample();
+			});
+		}
+		else selectExample();	
+
+	};
+
+	var selectExample = function () {
+			console.log($scope.example);
+			if ($scope.example.examples.length > 0) {
+				console.log("incr idx");
+				$scope.example.idx = $scope.example.idx < $scope.example.examples.length -1 ? $scope.example.idx+=1 : 0;
+				console.log($scope.example.idx);
+				$scope.example.value = $scope.example.examples[$scope.example.idx];
+			}
+			else $scope.example.value = "No examples available for this phrase";
+			console.log($scope.example.value);
+	};
+
 	var showAlert = function (success) {
 		if (success) {
 			$scope.alert.failure = false;
@@ -141,8 +162,8 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 		$timeout(function() {
 		    $scope.alert.show = false;
 		}, 3000);
+	};
 
-	}
 
 	$scope.randomMode = false;
 	$scope.alert = {
@@ -154,14 +175,15 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 		show : false,
 		value: ""
 	};
+	$scope.example = {
+		value: "",
+		show: false,
+		examples: [],
+		idx: -1
+	};
 	$scope.submission = {
 		answer: null
 	};
-	$scope.example = {
-		value: "",
-		show. false
-	}
 	$scope.setEntriesToQuiz({});
 	$scope.setPhraseToQuiz(false);
-
 });
