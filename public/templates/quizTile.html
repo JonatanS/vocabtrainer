@@ -1,12 +1,17 @@
 <div class="QuizTile" darken-on-hover ng-click="onClick(quiz)" >
+	<!-- TODO: insert delete button -->
 	<h4 class="Title">{{quiz.name | uppercase}}</h4>
+	<p class="Subtitle">
+		<span ng-if="quiz.timesTested > 0">Last tested on {{quiz.dateLastTested | date : 'shortDate'}}</span>
+		<span ng-if="quiz.timesTested == 0">You have not used this quiz</span>
+	</p>
 	<hr>
 	<h4>Filters:</h4>
 	<ul>
-		<li ng-if="quiz.filter_levels.length >0">Level: {{quiz.filter_levels| arrayToString}}</li>		
+		<li ng-if="quiz.filter_levels.length >0">Level: {{quiz.filter_levels| arrayToString}}</li>
 		<li ng-if="quiz.filter_tags.length >0">Tags: {{quiz.filter_tags| arrayToString}}</li>
-		<li>date from: 1/2/15</li>
-		<li>date to: 1/2/16</li>
-		<li>tags: kitchen, sports, beginner</li>
+		<li ng-if="quiz.filter_categories.length >0">Categories: {{quiz.filter_categories| arrayToString}}</li>
+		<li ng-if="quiz.filter_weekFrom">From: {{quiz.dateFrom | date : 'shortDate'}}</li>
+		<li ng-if="quiz.filter_weekTo">To: {{quiz.dateTo | date : 'shortDate'}}</li>
 	</ul>
 </div>

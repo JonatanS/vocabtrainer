@@ -127,11 +127,25 @@ var quizSchema = new mongoose.Schema({
 	{toJSON: { virtuals: true }, toObject: { virtuals: true }}
 );
 
+quizSchema.virtual('dateFrom').get(function(){
+	if(this.filter_weekFrom) {
+		return Date.now() - this.filter_weekFrom * 7 * 24 * 60 * 60 * 1000;
+	}
+	return null;
+});
+
+quizSchema.virtual('dateTo').get(function(){
+	if(this.filter_weekTo) {
+		return Date.now() - this.filter_weekTo * 7 * 24 * 60 * 60 * 1000;
+	}
+	return null;
+});
+
 var quizEntrySchema = new mongoose.Schema({
 	quiz: {type: Schema.Types.ObjectId, ref: 'Quiz', required: true},
 	entry: {type: Schema.Types.ObjectId, ref: 'Entry', required: true},
 	mute: {type: Boolean, default: false},
-	dateLastTested: {type: Date},
+	dateLastTested: {type: Date, default: new Date(0)},
 	numAttempts: {type: Number, default: 0},
 	avgScore: {type: Number, default: 0},
 	lastScore: {type: Number, default: 0}

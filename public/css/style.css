@@ -131,6 +131,12 @@ body {
 	text-align: center;
 }
 
+.QuizTile .Subtitle {
+	text-align: center;
+	color: black;
+	font-weight: bold;
+}
+
 #newQuizTile {
 	background-color: #0CE3AC;
 }
