@@ -7,6 +7,14 @@ app.factory("DictionaryFactory", function ($http){
 				var dictionary = response.data;
 				return dictionary;
 			});
-		}
+		},
+
+		remove: function (id) {
+			console.log(id);
+			return $http.delete('/api/dictionaries/' + id)
+			.then (function (response) {
+				return true;
+			});
+		},
 	};
 });

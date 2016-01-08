@@ -112,7 +112,15 @@ entrySchema.statics.findOrCreate = function (entryInfo){
 var quizSchema = new mongoose.Schema({
 	dictionary: {type: Schema.Types.ObjectId, ref: 'Dictionary', required: true},
 	name: {type: String, required: true},
-	filter: {type: String, required: false}
+	filter_weekFrom: Number,
+	filter_weekTo: Number,
+	filter_levels: [Number],
+	filter_tags: [String],
+	filter_categories: [String],
+	dateLastTested: {type: Date},
+	timesTested: {type: Number, default: 0},
+	avgScore: {type: Number, default: 0},
+	lastScore: {type: Number, default: 0}
 });
 
 var quizEntrySchema = new mongoose.Schema({

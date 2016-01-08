@@ -8,61 +8,61 @@ add links to add more vocab or to start the test
 <div ng-if="user.dictionaries.length > 0">
   <h4>Choose a dictionary to work with:</h4>
   <ul>
-  <li ng-repeat="dict in user.dictionaries">
-    <span>{{dict.name}}
-    <button type="submit" class="btn btn-danger btn-sm" ui-sref="practiceDictionary({dictionaryId: dict._id})">Practice_OLD</button>
-    <a ui-sref="getQuizzes({dictionaryId: dict._id})">
-      <button type="submit" class="btn btn-danger btn-sm" autofocus >Select Quiz</button>
-      </a>
-    <button type="submit" class="btn btn-primary btn-sm" ui-sref="editDictionary({dictionaryId: dict._id})">Edit Dict</button>
-      
-    </span>
-  </li>
+    <li ng-repeat="dict in user.dictionaries">
+      <span>{{dict.name}}
+        <button type="submit" class="btn btn-info btn-sm" ui-sref="practiceDictionary({dictionaryId: dict._id})">Practice_OLD</button>
+        <a ui-sref="getQuizzes({dictionaryId: dict._id})">
+          <button type="submit" class="btn btn-info btn-sm" autofocus >Select Quiz</button>
+        </a>
+        <button type="submit" class="btn btn-primary btn-sm" ui-sref="editDictionary({dictionaryId: dict._id})">Edit Dict</button>
+        <button class="btn btn-danger btn-sm" type="button" ng-model="dict" ng-click="removeDictionary()" title="delete Dictionary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      </span>
+    </li>
   </ul>
   <br><br>
 </div>
 
 <h4>Add a new dictionary:</h4>
 
-  <form method="POST" action="/../api/dictionaries/">
-    <input type="hidden" name="userId" value="{{user._id.toString()}}" class="form-control">
-    <input type="hidden" name="userName" value="{{user.firstName}}" class="form-control">
-    <div class="form-group">
-      <label for="language1" class="col-sm-3 control-label">Language to study</label>
-      <div class="col-sm-6 form-control">
-        <select name="language1">
-          <option selected value=""></option>
-          <option value="English">English</option>
-          <option value="French">French</option>
-          <option value="German">German</option>
-          <option value="Italian">Italian</option>
-          <option value="Spanish">Spanish</option>
-        </select>
-      </div>  
-    </div>
+<form method="POST" action="/../api/dictionaries/">
+  <input type="hidden" name="userId" value="{{user._id}}" class="form-control">
+  <input type="hidden" name="userName" value="{{user.firstName}}" class="form-control">
+  <div class="form-group">
+    <label for="language1" class="col-sm-3 control-label">Language to study</label>
+    <div class="col-sm-6 form-control">
+      <select name="language1">
+        <option selected value=""></option>
+        <option value="English">English</option>
+        <option value="French">French</option>
+        <option value="German">German</option>
+        <option value="Italian">Italian</option>
+        <option value="Spanish">Spanish</option>
+      </select>
+    </div>  
+  </div>
 
-        <div class="form-group">
-      <label for="language2" class="col-sm-3 control-label">Language to learn from</label>
-      <div class="col-sm-6 form-control">
-        <select name="language2">
-          <option selected value=""></option>
-          <option value="English">English</option>
-          <option value="French">French</option>
-          <option value="German">German</option>
-          <option value="Italian">Italian</option>
-          <option value="Spanish">Spanish</option>
-        </select>
-      </div>  
-    </div>
+  <div class="form-group">
+    <label for="language2" class="col-sm-3 control-label">Language to learn from</label>
+    <div class="col-sm-6 form-control">
+      <select name="language2">
+        <option selected value=""></option>
+        <option value="English">English</option>
+        <option value="French">French</option>
+        <option value="German">German</option>
+        <option value="Italian">Italian</option>
+        <option value="Spanish">Spanish</option>
+      </select>
+    </div>  
+  </div>
 
-    <div class="form-group">
-      <label for="name" class="col-sm-5 control-label">Name</label>
+  <div class="form-group">
+    <label for="name" class="col-sm-5 control-label">Name</label>
 
-        <input name="name" type="text" class="col-sm-6 form-control" placeholder="name of dictionary" />
+    <input name="name" type="text" class="col-sm-6 form-control" placeholder="name of dictionary" />
 
-    </div>
+  </div>
 
-    <div class="form-group col-sm-6 ">
-      <button type="submit" class="btn btn-primary" autofocus>submit</button>
-    </div>
-  </form>
+  <div class="form-group col-sm-6 ">
+    <button type="submit" class="btn btn-primary" autofocus>submit</button>
+  </div>
+</form>

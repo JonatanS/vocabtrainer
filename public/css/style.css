@@ -110,18 +110,23 @@ body {
 .QuizTile {
 	width: 250px;
 	height: 250px;
+	float: left;
 	border: 1px solid;
 	border-color: gray;
-	font-family: Helvetica;
 	background-color: #3498DB;
 	padding: 12px;
 	margin: 20px;
 	border-radius: 5px;
-	box-shadow: 3px 4px 5px 1px #6b6b6b;
+/*	box-shadow: 1px 2px 1px 1px #6b6b6b;*/
 	cursor: pointer;
 }
 
+#newQuizTile {
+	background-color: #0CE3AC;
+}
+
 .darken-on-hover {
-	background-color: #464545; 
+	background-color: #464545 !important; 
 	color: white;
+	box-shadow: 1px 2px 1px 1px #6b6b6b;
 }

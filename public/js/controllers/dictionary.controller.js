@@ -29,11 +29,11 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 	$scope.removeEntry = function () {
 		var entryToRemove = this.theEntry;
 		EntryFactory.remove(entryToRemove._id)
-			.then (function () {
-				//remove entry from activDict:
-				pos = $scope.activeDictionary.entries.map(function(e) { return e._id; }).indexOf(entryToRemove._id);
-				if (pos !== -1) $scope.activeDictionary.entries.splice(pos,1);
-			});
+		.then (function () {
+			//remove entry from activDict:
+			pos = $scope.activeDictionary.entries.map(function(e) { return e._id; }).indexOf(entryToRemove._id);
+			if (pos !== -1) $scope.activeDictionary.entries.splice(pos,1);
+		});
 	};
 
 
@@ -136,6 +136,15 @@ app.controller("DictionaryCtrl", function ($scope, $timeout, activeDictionary, E
 		else selectExample();	
 
 	};
+
+
+	$scope.testQuizData = function() {
+		console.log(activeDictionary);
+	}
+
+
+
+
 
 	var selectExample = function () {
 			console.log($scope.example);

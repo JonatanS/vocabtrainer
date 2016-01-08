@@ -1,7 +1,9 @@
-<!-- 2D grid of <quizTile> -->
-QUIZ SELECTOR!!!
+<!-- 2D grid of <quizTile> --> 
+<!-- Must define 'quiz' here -->
 <div class="quizGrid" ng-controller="QuizController">
-	<quiz-tile></quiz-tile>
-	<quiz-tile></quiz-tile>
-	<quiz-tile></quiz-tile>
+<h2>Select a quiz below or create a new one</h2>
+	<quiz-tile quiz="1"></quiz-tile>
+	<quiz-tile quiz="2"></quiz-tile>
+	<quiz-tile quiz="3"></quiz-tile>
+	<quiz-tile-new></quiz-tile-new>
 </div>

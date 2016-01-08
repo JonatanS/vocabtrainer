@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
 
 //POST: /add new entry
 router.post('/', function (req, res, next){
-	console.log("posting");
+	console.log("posting entry:");
 	console.log(typeof req.body.user);
 	console.log(typeof req.body.dict);
 	console.log(req.body);
