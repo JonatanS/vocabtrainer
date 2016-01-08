@@ -8,6 +8,7 @@ var Promise = require('bluebird');
 var User = models.User;
 var Dictionary = models.Dictionary;
 var Entry = models.Entry;
+var Quiz = models.Quiz;
 module.exports = router;
 
 // GET /api/dictionaries
@@ -17,26 +18,6 @@ router.get('/', function (req, res, next) {
 		res.json(allDicts);
 	}).then(null, next);
 });
-
-// GET /api/dictionaries/:id
-router.param('id', function (req,res,next, id){
-	var dict = Dictionary.findById(id).lean().select('-__v -dateCreated');
-	var entries = Entry.find({dictionary: id}).select('-__v');
-	Promise.all([dict, entries])
-	.then(function(dictEntriesArr){
-		var dict = dictEntriesArr[0];
-		var entries = dictEntriesArr[1];
-		console.log('found num entries: '+ entries.length);
-		dict.entries = entries;
-		req.dictionary = dict;
-		next();
-	})
-	.then(null, next);
-});
-
-router.get('/:id', function (req, res) {
-	res.json(req.dictionary);
-})
 
 router.post('/', function (req, res, next){
 	console.log("Dictionary/add Body:" + JSON.stringify(req.body));
@@ -50,4 +31,26 @@ router.post('/', function (req, res, next){
 		res.status(201).send(dict);
 
 	}).then(null, next);	
+});
+
+// GET /api/dictionaries/:id
+router.param('id', function (req,res,next, id){
+	var dict = Dictionary.findById(id).lean().select('-__v -dateCreated');
+	var entries = Entry.find({dictionary: id}).select('-__v');
+	var quizzes = Quiz.find({dictionary: id});
+	Promise.all([dict, entries, quizzes])
+	.then(function(dictEntriesArr){
+		var dict = dictEntriesArr[0];
+		var entries = dictEntriesArr[1];
+		var quizzes = dictEntriesArr[2];
+		dict.entries = entries;
+		dict.quizzes = quizzes;
+		req.dictionary = dict;
+		next();
+	})
+	.then(null, next);
+});
+
+router.get('/:id', function (req, res) {
+	res.json(req.dictionary);
 });

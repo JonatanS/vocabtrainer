@@ -11,6 +11,11 @@ body {
 	padding: 5px;
 }
 
+.navbar {
+  background-color: #222; /* fallback color, place your own */
+  opacity: 0.9;
+  }
+
 .hint-gender {
 	color: #b77600;
 }
@@ -100,4 +105,23 @@ body {
 }
 .ScoreBoard > .correctScore {
 	text-align: right;
+}
+
+.QuizTile {
+	width: 250px;
+	height: 250px;
+	border: 1px solid;
+	border-color: gray;
+	font-family: Helvetica;
+	background-color: #3498DB;
+	padding: 12px;
+	margin: 20px;
+	border-radius: 5px;
+	box-shadow: 3px 4px 5px 1px #6b6b6b;
+	cursor: pointer;
+}
+
+.darken-on-hover {
+	background-color: #464545; 
+	color: white;
 }

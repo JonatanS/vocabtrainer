@@ -50,9 +50,12 @@ router.post('/', function (req, res, next){
 router.delete('/:id', function (req, res, next) {
 	return Quiz.findById(req.params.id)
 	.then (function (quiz) {
+		QuizEntry.remove({quiz: req.params.id});	//TODO: test this!
 		quiz.remove()
 		.then( function () {
 			res.redirect('/api/quizzes/');
 		})
 	})
 });
+
+

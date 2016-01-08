@@ -32,4 +32,14 @@ app.config(function ($stateProvider){
 		}
 	});
 
+	$stateProvider.state('getQuizzes', {
+		url: '/dictionaries/:dictionaryId/quizzes',
+		templateUrl: '/templates/quizSelector.html',
+		controller: 'DictionaryCtrl',
+		resolve: {
+			activeDictionary: function (DictionaryFactory, $stateParams) {
+				return DictionaryFactory.getEntries($stateParams.dictionaryId);
+			}
+		}
+	});
 });

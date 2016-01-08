@@ -5,7 +5,7 @@ router.use('/users', require('./users'));
 router.use('/entries', require('./entries'));
 router.use('/dictionaries', require('./dictionaries'));
 router.use('/quizzes', require('./quizzes'));
-router.use('/quizEntries', require('./quizEntries'));
+router.use('/quizentries', require('./quizEntries'));
 
 // Make sure this is declared //
 // AFTER all of the registered routes!
