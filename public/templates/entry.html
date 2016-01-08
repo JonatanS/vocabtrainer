@@ -5,7 +5,7 @@
   	<td class="entry-input entry-category"><input type="text" ng-model="entry.category" class="form-control" name="category" ng-readonly="!isEditable" ng-change="onChange()"/></td>
   	<td class="entry-input entry-level"><input type="number" ng-model="entry.level" class="form-control" name="level" ng-readonly="!isEditable" ng-change="onChange()"/></td>
   	<td class="entry-input entry-mnemonic"><input type="text" ng-model="entry.mnemonic" class="form-control" name="mnemonic" ng-readonly="!isEditable" ng-change="onChange()"/></td>
-  	<td class="entry-input entry-tags"><input type="text" ng-model="entry.tags" value="entry.tags | tagArray" class="form-control" name="tags" ng-readonly="!isEditable" ng-change="onChange()"/></td>
+  	<td class="entry-input entry-tags"><input type="text" ng-model="entry.tags" value="entry.tags | arrayToString" class="form-control" name="tags" ng-readonly="!isEditable" ng-change="onChange()"/></td>
 	<td>
 		<button class="btn btn-danger btn-xs" type="button" ng-model="entry" ng-click="remove()" title="delete Entry"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
 

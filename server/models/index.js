@@ -81,11 +81,14 @@ var entrySchema = new mongoose.Schema({
 	dateCreated: {type: Date, default: Date.now},
 	dateUpdated: {type: Date},
 	level: {type: Number, enum: [1,2,3,4,5]}
-});
+}, 
+	{toJSON: { virtuals: true }, toObject: { virtuals: true }}	//set options to return virtuals in JSON
+);
 
 entrySchema.virtual('type').get(function(){
-	if (this.phraseL1.length === 1 && this.phraseL2.length ===1) return 'word';
-	else return 'phrase';
+	if (this.phraseL1.split(' ').length === 1 && this.phraseL2.split(' ').length ===1) return 'word';
+	if (this.phraseL1.split(' ').length === 2 && this.phraseL2.split(' ').length ===2 && this.category ==='noun') return 'word';
+	return 'phrase';
 });
 
 entrySchema.statics.findByTag = function (tag) {
@@ -107,7 +110,6 @@ entrySchema.statics.findOrCreate = function (entryInfo){
         });
 };
 
-
 //QUIZ SCHEMAS
 var quizSchema = new mongoose.Schema({
 	dictionary: {type: Schema.Types.ObjectId, ref: 'Dictionary', required: true},
@@ -121,7 +123,9 @@ var quizSchema = new mongoose.Schema({
 	timesTested: {type: Number, default: 0},
 	avgScore: {type: Number, default: 0},
 	lastScore: {type: Number, default: 0}
-});
+}, 
+	{toJSON: { virtuals: true }, toObject: { virtuals: true }}
+);
 
 var quizEntrySchema = new mongoose.Schema({
 	quiz: {type: Schema.Types.ObjectId, ref: 'Quiz', required: true},
@@ -132,7 +136,6 @@ var quizEntrySchema = new mongoose.Schema({
 	avgScore: {type: Number, default: 0},
 	lastScore: {type: Number, default: 0}
 });
-
 
 //EXPORT MODELS
 var User = mongoose.model('User', userSchema);

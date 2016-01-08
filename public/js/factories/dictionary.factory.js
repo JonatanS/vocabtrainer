@@ -1,7 +1,8 @@
 app.factory("DictionaryFactory", function ($http){
 
 	return {
-		getEntries : function (dictId) {
+		populateDict : function (dictId) {
+			//grab entries and quizzes
 			return $http.get('/api/dictionaries/' + dictId)
 			.then( function (response) {
 				var dictionary = response.data;

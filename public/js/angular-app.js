@@ -16,7 +16,7 @@ app.config(function ($stateProvider){
 		controller: 'DictionaryCtrl',
 		resolve: {
 			activeDictionary: function (DictionaryFactory, $stateParams) {
-				return DictionaryFactory.getEntries($stateParams.dictionaryId);
+				return DictionaryFactory.populateDict($stateParams.dictionaryId);
 			}
 		}
 	});
@@ -27,7 +27,7 @@ app.config(function ($stateProvider){
 		controller: 'DictionaryCtrl',
 		resolve: {
 			activeDictionary: function (DictionaryFactory, $stateParams) {
-				return DictionaryFactory.getEntries($stateParams.dictionaryId);
+				return DictionaryFactory.populateDict($stateParams.dictionaryId);
 			}
 		}
 	});
@@ -38,7 +38,7 @@ app.config(function ($stateProvider){
 		controller: 'DictionaryCtrl',
 		resolve: {
 			activeDictionary: function (DictionaryFactory, $stateParams) {
-				return DictionaryFactory.getEntries($stateParams.dictionaryId);
+				return DictionaryFactory.populateDict($stateParams.dictionaryId);
 			}
 		}
 	});

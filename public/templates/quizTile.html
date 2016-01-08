@@ -1,8 +1,10 @@
-<div class="QuizTile" darken-on-hover ng-click="onClick(quiz)">
-	<h2>Quiz Name</h2>
-	<h4>Date last used</h4>
+<div class="QuizTile" darken-on-hover ng-click="onClick(quiz)" >
+	<h4 class="Title">{{quiz.name | uppercase}}</h4>
+	<hr>
 	<h4>Filters:</h4>
 	<ul>
+		<li ng-if="quiz.filter_levels.length >0">Level: {{quiz.filter_levels| arrayToString}}</li>		
+		<li ng-if="quiz.filter_tags.length >0">Tags: {{quiz.filter_tags| arrayToString}}</li>
 		<li>date from: 1/2/15</li>
 		<li>date to: 1/2/16</li>
 		<li>tags: kitchen, sports, beginner</li>

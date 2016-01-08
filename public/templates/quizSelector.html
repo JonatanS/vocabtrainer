@@ -1,9 +1,8 @@
 <!-- 2D grid of <quizTile> --> 
 <!-- Must define 'quiz' here -->
-<div class="quizGrid" ng-controller="QuizController">
+<p>This Dictionary Has {{activeDictionary.quizzes.length}} Quizzes</p>
+<div class="QuizGrid" ng-controller="QuizController">
 <h2>Select a quiz below or create a new one</h2>
-	<quiz-tile quiz="1"></quiz-tile>
-	<quiz-tile quiz="2"></quiz-tile>
-	<quiz-tile quiz="3"></quiz-tile>
-	<quiz-tile-new></quiz-tile-new>
+	<quiz-tile quiz="entry" ng-repeat="entry in activeDictionary.quizzes | orderBy:'name'"></quiz-tile>
+	<quiz-tile-new></quiz-tile-new >
 </div>
