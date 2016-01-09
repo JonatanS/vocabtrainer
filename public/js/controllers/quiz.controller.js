@@ -1,5 +1,5 @@
 //app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz, activeDictionary ){
-app.controller("QuizCtrl", function ($scope, QuizFactory, quizData ){
+app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout ){
 	console.log(quizData);
 	$scope.activeQuiz = quizData.quiz;
 	$scope.activeDictionary = quizData.dictionary;
@@ -13,7 +13,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData ){
 	//randomly pick a phrase to translate:
 	$scope.setPhraseToQuiz = function(random) {
 		console.log("Selecing Quiz Phrase");
-		console.log($scope);
 		if(!$scope.idx && $scope.idx!==0) $scope.idx = -1;
 		if(random) {
 			$scope.idx = Math.floor((Math.random() * $scope.activeQuiz.entries.length - 1) + 1);
@@ -21,7 +20,7 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData ){
 		else {
 			$scope.idx = ($scope.idx < $scope.activeQuiz.entries.length - 1 ? $scope.idx+1 : 0);
 		}
-		$scope.currentPhrase = $scope.activeQuiz.entries[$scope.idx];
+		$scope.currentPhrase = $scope.activeQuiz.entries[$scope.idx].entry;
 		$scope.hint.show = false;
 		console.log($scope.currentPhrase);
 		QuizFactory.numQuestionsAsked++;
