@@ -1,5 +1,5 @@
 //app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz, activeDictionary ){
-app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout ){
+app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, LookupFactory ){
 	console.log(quizData);
 	$scope.activeQuiz = quizData.quiz;
 	$scope.activeDictionary = quizData.dictionary;
@@ -78,12 +78,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout ){
 
 	};
 
-	// $scope.setEntriesToQuiz = function(selectionCriteria) {
-	// 	//TODO: filter selection based on criteria. for now take entire dict:
-	// 	console.log($scope);
-	// 	$scope.activeQuiz.entries = angular.copy($scope.activeQuiz.entries);
-	// };
-
 	$scope.toggleRandom = function () {
 		$scope.randomMode = ! $scope.randomMode;
 		console.log($scope.randomMode);
@@ -95,7 +89,7 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout ){
 		$scope.example.show = true;
 		if ($scope.example.examples.length === 0 && $scope.example.idx === -1) {
 			//grab examples from API and populate .examples array:
-			return LookupFactory.getGlosbePhrases($scope.currentPhrase.phraseL1,$scope.activeQuiz.language1, $scope.activeQuiz.language2)
+			return LookupFactory.getGlosbePhrases($scope.currentPhrase.phraseL1,$scope.activeDictionary.language1, $scope.activeDictionary.language2)
 			.then( function (response) {
 				$scope.example.examples = response.examples.map(function (e) {
 					console.log(e.first.replace(/<.*?>/g,''));
@@ -107,12 +101,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout ){
 		else selectExample();	
 
 	};
-
-
-	$scope.testQuizData = function() {
-		console.log(activeQuiz);
-	}
-
 
 	var selectExample = function () {
 			console.log($scope.example);
