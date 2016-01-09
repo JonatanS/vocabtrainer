@@ -16,14 +16,15 @@ app.config(function ($stateProvider){
 		controller: 'DictionaryCtrl',
 		resolve: {
 			activeDictionary: function (DictionaryFactory, $stateParams) {
+				console.log($stateParams);
 				return DictionaryFactory.populateDict($stateParams.dictionaryId);
 			}
 		}
 	});
 
-	$stateProvider.state('practiceDictionary', {
+	$stateProvider.state('practiceDictionaryOld', {
 		url: '/dictionaries/:dictionaryId/practice',
-		templateUrl: '/templates/practiceDictionary.html',		
+		templateUrl: '/templates/practiceDictionaryOld.html',		
 		controller: 'DictionaryCtrl',
 		resolve: {
 			activeDictionary: function (DictionaryFactory, $stateParams) {
@@ -40,6 +41,19 @@ app.config(function ($stateProvider){
 			activeDictionary: function (DictionaryFactory, $stateParams) {
 				return DictionaryFactory.populateDict($stateParams.dictionaryId);
 			}
+		}
+	});
+
+
+	$stateProvider.state('takeQuiz', {
+		url: '/quizzes/:quizId/take',
+		templateUrl: '/templates/takeQuiz.html',		
+		controller: 'QuizCtrl',
+		resolve: {
+			activeQuiz: function (QuizFactory, $stateParams) {
+				return QuizFactory.populateQuiz($stateParams.quizId);
+			}
+			//activeDictionary: $stateParams.dict;
 		}
 	});
 });

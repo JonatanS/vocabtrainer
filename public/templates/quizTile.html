@@ -1,4 +1,5 @@
-<div class="QuizTile" darken-on-hover ng-click="onClick(quiz)" >
+<!-- <div class="QuizTile" darken-on-hover ui-sref="takeQuiz({quizId: quiz._id, dict: activeDictionary})" > -->
+<div class="QuizTile" darken-on-hover ui-sref="takeQuiz({quizId: quiz._id})" >
 	<!-- TODO: insert delete button -->
 	<h4 class="Title">{{quiz.name | uppercase}}</h4>
 	<p class="Subtitle">

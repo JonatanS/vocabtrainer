@@ -84,7 +84,8 @@ body {
 }
 
 .ScoreBoard {
-	width: 300px;
+	margin-top: 30px;
+	width: 250px;
 	height: 80px;
 	border: 1px solid;
 	border-color: gray;
@@ -93,7 +94,7 @@ body {
 	text-transform: uppercase;
 	padding: 12px;
 	border-radius: 7px;
-	box-shadow: 3px 4px 5px 1px #6b6b6b;
+	/*box-shadow: 3px 4px 5px 1px #6b6b6b;*/
 
 }
 

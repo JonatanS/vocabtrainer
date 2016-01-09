@@ -1,6 +1,7 @@
 var mongoose = require ('mongoose');
 mongoose.connect('mongodb://localhost/vocabtrainer');
 var Schema = mongoose.Schema;
+var Promise = require('bluebird');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongodb connection error: '));  //log error on unsucessful connection
@@ -150,6 +151,23 @@ var quizEntrySchema = new mongoose.Schema({
 	avgScore: {type: Number, default: 0},
 	lastScore: {type: Number, default: 0}
 });
+
+quizEntrySchema.statics.findOrCreateMultiple = function (quizId, arrEntryIds){
+    var self1 = this;
+    var self2 = this;
+    return Promise.map(arrEntryIds, function(eid){
+	    return self1.findOne({ quiz: quizId, entry: eid}).exec()
+        .then(function (dict) {
+            if (dict === null) {
+        		console.log("creating new QuizEntry");
+                return self2.create({ quiz: quizId, entry: eid});
+            } else {
+        		console.log("found existing QuizEntry");
+                return dict;
+            }
+        });
+    });
+};
 
 //EXPORT MODELS
 var User = mongoose.model('User', userSchema);

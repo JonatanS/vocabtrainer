@@ -41,11 +41,12 @@ app.factory("QuizFactory", function ($http){
 		// 	});
 		// },
 
-		getById: function (id) {
+		populateQuiz: function (id) {
 			return $http.get('/api/quizzes/' +id)
 			.then(function (response) {
-				//should be populated with entries here.
-				console.log(response.data);
+				//should be populated with quizentries here.
+				console.log("got quiz with quizEntries");
+				console.log(response.data.entries);
 				return response.data;
 			});
 		}
