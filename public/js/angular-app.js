@@ -50,12 +50,31 @@ app.config(function ($stateProvider){
 		templateUrl: '/templates/takeQuiz.html',		
 		controller: 'QuizCtrl',
 		resolve: {
-			activeQuiz: function (QuizFactory, $stateParams) {
-				return QuizFactory.populateQuiz($stateParams.quizId);
-			},
-			activeDictionary: function($stateParams) {
-				return $stateParams.dict;
+
+			//$stateParams are contained in the URL!!!
+			quizData: function (QuizFactory, DictionaryFactory, $stateParams) {
+				var retObject = {};
+				return QuizFactory.populateQuiz($stateParams.quizId)
+				.then(function (quiz){
+					console.log("getting dictionary for quiz page");
+					retObject.quiz = quiz;
+					return DictionaryFactory.populateDict(quiz.dictionary);				
+				})
+				.then(function (activeDictionary) {
+					retObject.dictionary = activeDictionary;
+					return retObject;
+				});
 			}
+			// activeQuiz: function (QuizFactory, $stateParams) {
+			// 	return QuizFactory.populateQuiz($stateParams.quizId);
+			// },
+			// activeDictionary: function(DictionaryFactory, $stateParams) {
+			// 	return QuizFactory.populateQuiz($stateParams.quizId)
+			// 	.then(function (quiz){
+			// 		console.log("getting dictionary for quiz page");
+			// 		return DictionaryFactory.populateDict(quiz.dictionary);				
+			// 	});
+			// }
 		}
 	});
 });
