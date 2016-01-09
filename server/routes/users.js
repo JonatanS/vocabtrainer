@@ -4,6 +4,7 @@ var mongoose = require ('mongoose');
 var router = express.Router();
 var models = require('../models');
 var Promise = require('bluebird');
+//mongoose.Promise = Promise;
 var User = models.User;
 var Dict = models.Dictionary;
 var Entry = models.Entry;
@@ -22,7 +23,6 @@ router.get('/emailLookup', function (req, res, next){
 	return user
 	.then(function(user){
 		//grab their dicts
-		console.log(user);
 		res.redirect('/users/'+ user._id);
 		return [user, Dict.find({user: user})];
 	})
@@ -66,4 +66,3 @@ router.get('/:userId', function (req, res, next){
     })
     .then(null, next);
 });
-

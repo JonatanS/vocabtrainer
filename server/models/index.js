@@ -1,6 +1,7 @@
 var mongoose = require ('mongoose');
 mongoose.connect('mongodb://localhost/vocabtrainer');
 var Schema = mongoose.Schema;
+var Promise = require('bluebird');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongodb connection error: '));  //log error on unsucessful connection
@@ -24,7 +25,6 @@ userSchema.virtual('fullName').get(function () {
 });
 
 userSchema.statics.findOrCreate = function (userInfo) {
-
     var self = this;
     return this.findOne({ email: userInfo.email }).exec()
         .then(function (user) {
@@ -51,7 +51,7 @@ var dictSchema = new mongoose.Schema({
 		enum: languages
 	},
 	name: {type: String, unique: true},	//TODO write auto-naming function
-	userId: {type: String, required: true},
+	user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
 	isPublic: {type: Boolean, default: false, required: true}
 });
 
@@ -61,6 +61,7 @@ dictSchema.statics.findOrCreate = function (dictInfo) {
     return this.findOne({ name: dictInfo.name }).exec()
         .then(function (dict) {
             if (dict === null) {
+            	console.log("Creating new Dictionary for user: " + dictInfo.user);
                 return self.create(dictInfo);
             } else {
                 return dict;
@@ -68,20 +69,11 @@ dictSchema.statics.findOrCreate = function (dictInfo) {
         });
 };
 
-
-// //write method to return entries for dict from [entryIds]
-// dictSchema.method.getEntries = function (){
-// 	return Entry.find({
-// 	        _id: {$in: this.entries}
-// 	}).exec();
-// };
-
-
 //ENTRY SCHEMA
 var entrySchema = new mongoose.Schema({
 	//http://stackoverflow.com/questions/14992123/finding-a-mongodb-document-by-objectid-with-mongoose
-	userId: {type: String, required: true},
-	dictId: {type: String, required: true},
+	user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+	dictionary: {type: Schema.Types.ObjectId, ref: 'Dictionary', required: true},
 	phraseL1: {type: String, required: true},
 	phraseL2: {type: String, required: true},
 	category: {type: String, required: false, enum: ['adverb','adjective','expression','noun','sentence','verb' ]},
@@ -90,11 +82,14 @@ var entrySchema = new mongoose.Schema({
 	dateCreated: {type: Date, default: Date.now},
 	dateUpdated: {type: Date},
 	level: {type: Number, enum: [1,2,3,4,5]}
-});
+}, 
+	{toJSON: { virtuals: true }, toObject: { virtuals: true }}	//set options to return virtuals in JSON
+);
 
 entrySchema.virtual('type').get(function(){
-	if (this.phraseL1.length === 1 && this.phraseL2.length ===1) return 'word';
-	else return 'phrase';
+	if (this.phraseL1.split(' ').length === 1 && this.phraseL2.split(' ').length ===1) return 'word';
+	if (this.phraseL1.split(' ').length === 2 && this.phraseL2.split(' ').length ===2 && this.category ==='noun') return 'word';
+	return 'phrase';
 });
 
 entrySchema.statics.findByTag = function (tag) {
@@ -106,7 +101,7 @@ entrySchema.statics.findByTag = function (tag) {
 entrySchema.statics.findOrCreate = function (entryInfo){
     var self = this;
 
-    return this.findOne({ userId: entryInfo.userId, phraseL1: entryInfo.phraseL1, phraseL2: entryInfo.phraseL2}).exec()
+    return this.findOne({ user: entryInfo.user, phraseL1: entryInfo.phraseL1, phraseL2: entryInfo.phraseL2}).exec()
         .then(function (dict) {
             if (dict === null) {
                 return self.create(entryInfo);
@@ -116,28 +111,84 @@ entrySchema.statics.findOrCreate = function (entryInfo){
         });
 };
 
-// var passportLocalMongoose = require('passport-local-mongoose');
-// var accountSchema = new mongoose.Schema({
-//     email: String,
-//     password: String
-// });
+//QUIZ SCHEMAS
+var quizSchema = new mongoose.Schema({
+	dictionary: {type: Schema.Types.ObjectId, ref: 'Dictionary', required: true},
+	name: {type: String, required: true},
+	filter_weekFrom: Number,
+	filter_weekTo: Number,
+	filter_levels: [Number],
+	filter_tags: [String],
+	filter_categories: [String],
+	dateLastTested: {type: Date, default: new Date(0)},
+	timesTested: {type: Number, default: 0},
+	avgScore: {type: Number, default: 0},
+	lastScore: {type: Number, default: 0}
+}, 
+	{toJSON: { virtuals: true }, toObject: { virtuals: true }}
+);
 
-// accountSchema.plugin(passportLocalMongoose);
+quizSchema.virtual('dateFrom').get(function(){
+	if(this.filter_weekFrom) {
+		return Date.now() - this.filter_weekFrom * 7 * 24 * 60 * 60 * 1000;
+	}
+	return null;
+});
 
-//TEST SCHEMA
+quizSchema.virtual('dateTo').get(function(){
+	if(this.filter_weekTo) {
+		return Date.now() - this.filter_weekTo * 7 * 24 * 60 * 60 * 1000;
+	}
+	return null;
+});
 
+var quizEntrySchema = new mongoose.Schema({
+	quiz: {type: Schema.Types.ObjectId, ref: 'Quiz', required: true},
+	entry: {type: Schema.Types.ObjectId, ref: 'Entry', required: true},
+	mute: {type: Boolean, default: false},
+	dateLastTested: {type: Date, default: new Date(0)},
+	numAttempts: {type: Number, default: 0},
+	avgScore: {type: Number, default: 0},
+	lastScore: {type: Number, default: 0}
+});
 
-
+quizEntrySchema.statics.findOrCreateMultiple = function (quizId, arrEntryIds){
+    var self1 = this;
+    var self2 = this;
+    return Promise.map(arrEntryIds, function(eid){
+	    return self1.findOne({ quiz: quizId, entry: eid}).populate('entry').exec()
+        .then(function (quizEntry) {
+            if (quizEntry === null) {
+            	//this does not work:
+        		console.log("returning new QuizEntry");
+        		var newQE = new QuizEntry({ quiz: quizId, entry: eid});
+        		return newQE.save()
+        		//return self2.create({ quiz: quizId, entry: eid})
+        		.then( function (newQuizEntry){
+	        		return Entry.populate(newQuizEntry, {path:'entry'}, function (err, qe) {
+        				return qe;
+    	    		});
+        		});
+            } else {
+        		console.log("returning existing QuizEntry");
+                return quizEntry;
+            }
+        });
+    });
+};
 
 //EXPORT MODELS
 var User = mongoose.model('User', userSchema);
 var Entry = mongoose.model('Entry', entrySchema);
 var Dictionary = mongoose.model('Dictionary', dictSchema);
+var Quiz = mongoose.model('Quiz', quizSchema);
+var QuizEntry = mongoose.model('QuizEntry', quizEntrySchema);
 //var Account = mongoose.model('Account', accountSchema);
 
 module.exports = {
 	User: User,
 	Entry: Entry,
 	Dictionary: Dictionary,
-	//Account: Account
+	Quiz: Quiz,
+	QuizEntry: QuizEntry
 };

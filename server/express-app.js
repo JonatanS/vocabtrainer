@@ -8,9 +8,10 @@ var mongoose = require('mongoose');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var swig = require('swig');
-require('./filters')(swig);	//returns a function from './filters': http://paularmstrong.github.io/swig/docs/filters/
+require('../non-angular-public/filters')(swig);	//returns a function from './filters': http://paularmstrong.github.io/swig/docs/filters/
 var path = require('path');
-app.set('views', path.join(__dirname, './views'));
+console.log("dir:" + __dirname);
+app.set('views', path.join(__dirname, '../non-angular-public/views'));
 app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
 swig.setDefaults({ cache: false });
@@ -19,6 +20,12 @@ swig.setDefaults({ cache: false });
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+
+// The path of our public directory. ([ROOT]/public)
+var publicPath = path.join(__dirname, '../public');
+var bootstrapPath = path.join(__dirname, '../node_modules/bootstrap/dist')
+var indexHtmlPath = path.join(__dirname, '../public/index.html');
 
 // //passport stuff:
 // app.use(require('express-session')({
@@ -39,18 +46,23 @@ app.use(bodyParser.json());
 
 
 //ROUTES NEED TO BE DEFINED AFTER THE PASSPORT STUFF:
-
+app.use(express.static(publicPath));
+//app.use(express.static(bootstrapPath));
+app.get('/', function (req, res) {
+    res.sendFile(indexHtmlPath);	//angular default html
+});
 //determine which sub router to use
-app.use('/users', require('./routes/users'));
-app.use('/dictionaries', require('./routes/dictionaries'));
-app.use('/entries', require('./routes/entries'));
-app.use('/', require('./routes/index'));
+app.use('/test/users', require('./routes/users'));
+app.use('/test/dictionaries', require('./routes/dictionaries'));
+app.use('/test/entries', require('./routes/entries'));
+app.use('/test/', require('./routes'));
+
+app.use('/api', require('./routes/api/index'));
 
 // statically serve front-end dependencies
-app.use('/',express.static(path.join(__dirname, '/public')));
-app.use('/bootstrap',express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
-app.use('/jquery',express.static(path.join(__dirname, '/node_modules/jquery/dist')));
-console.log('bootstrap path: ' + path.join(__dirname, '/node_modules/bootstrap/dist'));
+app.use('/',express.static(path.join(__dirname, '../non-angular-public/public')));
+app.use('/bootstrap',express.static(path.join(__dirname, '../node_modules/bootstrap/dist')));
+app.use('/jquery',express.static(path.join(__dirname, '../node_modules/jquery/dist')));
 
 module.exports = app;
 

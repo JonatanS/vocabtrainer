@@ -2,11 +2,10 @@
   "name": "vocabtrainer",
   "version": "1.0.0",
   "description": "vocabulary training software",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-css": "node-sass -w -r assets/stylesheets -o public/stylesheets",
-    "start": "npm run build-css & nodemon -e html,css,js server.js"
+    "start": "nodemon -e html,css,js server/server.js"
   },
   "repository": {
     "type": "git",

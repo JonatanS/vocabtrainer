@@ -1,0 +1,58 @@
+<h1>Practice your vocabulary in {{activeQuiz.name | uppercase}}</h1>
+<p>This Quiz Has {{activeQuiz.entries.length}} Entries</p>
+<br/>
+<div class="practice-card">
+	<h4>translate the following into {{activeDictionary.language1}}:</h4>
+	<h2>{{currentPhrase}}</h2>
+	<!-- novalidate is used to disable browser's native form validation. -->
+	<div class="row">
+		<form class="form-inline" ng-submit="evaluateSubmission()" name="quizForm" novalidate>
+			<div class=" form-group col-sm-6 no-padding">
+				<label class="sr-only" for="cardAnswer">Answer</label>
+	    		<input type="text" class="form-control" id="practice-card-answer" placeholder="Your Answer" ng-model="submission.answer" name="answer" required>
+    		</div>
+  			<div class="col-sm-6 no-padding">
+				<button type="submit" class="btn btn-success" ng-disabled="quizForm.$invalid"  title="{{quizForm.$invalid ? 'answer cannot be empty':''}}">Submit</button>
+				<button type="button" ng-click="skipQuestion()" class="btn btn-default" title="skip this question"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+				<button id="randomModeBtn" type="button" class="btn btn-default" ng-click="toggleRandom()" title="randomize order of questions"><span class="glyphicon glyphicon-random" aria-hidden="true"></span></button>
+				<button id="dislikeQuestionBtn" type="button" class="btn btn-default" disabled title="Don't quiz this phrase again"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></button>
+			</div>
+		</form>
+	</div>
+	<div class="row hint-btns">
+		<div class="col-sm-6">
+			<span ng-show='hint.show'>{{hint.value}}</span></div>
+		<div class="col-sm-6 no-padding">
+			<button type="button" class="btn btn-default btn-sm hint-gender" ng-show="currentPhrase.category == 'noun'" ng-click="showHint('gender')" title="show gender"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>
+			<button type="button" class="btn btn-default btn-sm hint-letters" ng-click="showHint('numLetters')" title="show number of letters"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>
+			<button type="button" class="btn btn-default btn-sm hint-words" ng-click="showHint('numWords')" title="show number of words"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>
+
+			<button type="button" class="btn btn-default btn-sm hint-first-letter" ng-click="showHint('firstLetter')" title="Show first letter"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>
+
+			<button type="button" class="btn btn-default btn-sm hint-vowels" ng-click="showHint('vowels')" ng-model="hint.type" title="Show vowels"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>
+
+			<button type="button" ng-click="showHint('solution')" class="btn btn-default btn-sm" title="show solution"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
+
+			<button type="button" ng-click="getExamples()" class="btn btn-default btn-sm" title="show example"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+		</div>
+	</div>
+</div>
+<div class="practice-response-field">
+	<div class="row">
+	<div class="alert alert-info alert-dismissible animate-hide" role="alert" ng-show="example.show">
+	<button type="button" class="close" ng-click="getExamples()" class="btn btn-info btn-xs" title="show example"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+  		{{example.value}}
+<!--     <a class="alert-link" href="#">more examples</a> -->
+	</div>
+	</div>
+	<div class="alert alert-success alert-dismissible animate-hide" role="alert" ng-show="alert.success && alert.show">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    Right on! Well done!
+	</div>
+	<div class="alert alert-danger alert-dismissible animate-hide" role="alert" ng-show="alert.failure && alert.show">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    Oh no! Try again! Or skip this question...
+	    <a class="alert-link" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
+	    <a class="alert-link" href="#"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>
+	</div>
+</div>

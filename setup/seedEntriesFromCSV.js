@@ -2,11 +2,12 @@
 
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
+var models = require('../server/models');
 var Promise = require('bluebird');
 var User = models.User;
 var Dict = models.Dictionary;
 var Entry = models.Entry;
+var Quiz = models.Quiz;
 module.exports = router;
 
 var fs = require('fs');
@@ -21,17 +22,21 @@ fs.readFile('german-english-seed.csv', function(err, data){
 			email: 'jonatan@jschumacher.com',
 			firstName: 'Jonatan',
 			lastName: 'Schumacher'
+			// email: 'me@gmail.com',
+			// firstName: 'Todd',
+			// lastName: 'Schultz'
 			// email: 'daniella.polar@gmail.com',
-			// firstName: 'Daniella',
-			// lastName: 'Polar'
+			// firstName: 'Dani',
+			// lastName: 'Schumi'
 		})
 		.then(function(user){
 			//create new dict
 			return Dict.findOrCreate({
 				language1: 'German',
 				language2: 'English',
-				name:'German-English',
-				userId: user._id.toString()
+				//name:user.firstName + '-German-English',
+				name:'dict with quizzes',
+				user: user._id
 			})
 		})
 		.then(function(dict){
@@ -44,8 +49,8 @@ fs.readFile('german-english-seed.csv', function(err, data){
 				console.log("row:" ,r);
 				var values = r.split(',');
 				return {
-					userId: dict.userId,
-					dictId: dict._id.toString(),
+					user: dict.user,
+					dictionary: dict._id,
 					phraseL1: values[0],
 					phraseL2: values[1],
 					category: values[2],
@@ -58,12 +63,50 @@ fs.readFile('german-english-seed.csv', function(err, data){
 
 			//then do batch save
 			return Entry.create(entries)
-			.then(function(){
-				console.log("SUCCESS!");
+			.then(function(entries){
+				//create quizzes here:
+				return createDefaultQuizzes(entries[0].dictionary)
+				.then(function (quizzes){
+					console.log("SUCCESS!");
+				})
 			})
 		})
 		.then(null, function(err){
 			console.error(err);
 		})
 	}	//end else
-}) 
+}); 
+
+var createDefaultQuizzes = function(dictId) {
+	var quiz1 = Quiz.create({
+		dictionary: dictId,
+		name: "last two weeks",
+		filter_weekFrom: 2
+	});
+
+	var quiz2 = Quiz.create({
+		dictionary: dictId,
+		name: "last 10 weeks",
+		filter_weekFrom: 10
+	});
+
+	var quiz3 = Quiz.create({
+		dictionary: dictId,
+		name: "levels 1-2",
+		filter_levels: [1,2]
+	});
+
+	var quiz4 = Quiz.create({
+		dictionary: dictId,
+		name: "nouns only",
+		filter_categories: ['noun']
+	});
+
+	var quiz5 = Quiz.create({
+		dictionary: dictId,
+		name: "entire dictionary"
+	});
+	console.log("creating quizzes 1-5 now");
+	//must return a promise!
+    return Promise.all([quiz1,quiz2,quiz3,quiz4,quiz5]);
+};

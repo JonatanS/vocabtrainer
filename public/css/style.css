@@ -1,0 +1,149 @@
+body {
+  padding: 55px 30px;
+  /*min-width: -webkit-min-content;*/ }
+
+/*.centered {
+	text-align: center;
+	margin: auto;
+}
+*/
+.no-padding {
+	padding: 5px;
+}
+
+.navbar {
+  background-color: #222; /* fallback color, place your own */
+  opacity: 0.9;
+  }
+
+.hint-gender {
+	color: #b77600;
+}
+.hint-letters {
+	color: #cc8400;
+}
+.hint-words {
+	color: #d19019;
+}
+.hint-first-letter {
+	color: #d69c32;
+}
+.hint-vowels {
+	color: #dba84c;
+}
+
+.table#entry-list > tbody > tr.editContent {
+	color: #86c5da;
+	font-style: italic;
+	font-size: 1.3em;
+	border: 2px dotted #ccc;
+	height: 60px;
+	vertical-align: middle !important;	
+}
+
+.newEntryLabel {
+	float: right;
+}
+/*.ng-dirty {
+    background: #C0D9AF;
+}*/
+
+.practice-response-field {
+	width: 600px;
+	height: 150px;
+	margin: 0 auto;
+	margin-top: 20px;
+	font-style: italic;
+	/*border: 1px solid black;*/
+	/*padding: 30px;*/
+	/*border-radius: 7px;*/
+	/*box-shadow: 3px 4px 5px 1px #6b6b6b;*/
+	/*background-color: #d3d3d3;*/
+}
+
+.practice-card {
+	width: 600px;
+	height: 250px;
+	margin: 0 auto;
+	margin-top: 20px;
+	border: 1px solid black;
+	padding: 30px;
+	border-radius: 7px;
+	box-shadow: 3px 4px 5px 1px #6b6b6b;
+	background-color: #3498DB;
+}
+
+.practice-card .form-inline .form-control {
+	width: 100%;
+}
+
+ .hint-btns {
+	margin: 10px 15px 10px -10px;
+	border: #a9a9a9 solid 1px;
+	border-radius: 5px;
+}
+
+.ScoreBoard {
+	margin-top: 30px;
+	width: 250px;
+	height: 80px;
+	border: 1px solid;
+	border-color: gray;
+	font-family: Helvetica;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 12px;
+	border-radius: 7px;
+	/*box-shadow: 3px 4px 5px 1px #6b6b6b;*/
+
+}
+
+.ScoreBoard .OneLine {
+	display: inline;
+}
+
+.ScoreBoard > .correctScore {
+	text-align: left;
+}
+.ScoreBoard > .correctScore {
+	text-align: right;
+}
+
+/*NOT SURE WHY THIS DOES NOT WORK*/
+/*.QuizGrid {
+	float: left;
+}*/
+
+.QuizTile {
+	float: left;
+	width: 280px;
+	height: 280px;
+	border: 1px solid;
+	border-color: gray;
+	background-color: #3498DB;
+	padding: 12px;
+	margin: 20px;
+	border-radius: 5px;
+/*	box-shadow: 1px 2px 1px 1px #6b6b6b;*/
+	cursor: pointer;
+}
+
+.QuizTile .Title {
+	text-align: center;
+}
+
+.QuizTile .Subtitle {
+	text-align: center;
+	color: black;
+	font-weight: bold;
+}
+
+#newQuizTile {
+	background-color: #0CE3AC;
+}
+
+.darken-on-hover {
+	background-color: #464545 !important; 
+	color: white;
+	box-shadow: 1px 2px 1px 1px #6b6b6b;
+}
