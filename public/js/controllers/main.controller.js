@@ -5,7 +5,7 @@
 
 app.controller('MainCtrl', function ($scope, UserFactory, DictionaryFactory) {
 	//TODO: replace this with passport stuffs
-	var loggedInUserId = "56784be146cb1f170e4d2ec4";
+	var loggedInUserId = "5691577ddc51a2b71e12f8e8";
 
 	var getUserData = function(){
 		$scope.loading = true;

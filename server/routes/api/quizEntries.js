@@ -18,6 +18,8 @@ router.get('/', function (req, res, next) {
 router.param('id', function (req, res, next, id) {
 	//http://stackoverflow.com/questions/14504385/why-cant-you-modify-the-data-returned-by-a-mongoose-query-ex-findbyid
 	return quizEntry = QuizEntry.findById(id).lean().select('-__v')	//exclude fields from search
+	.populate('entry')
+	.exec()
 	.then(function (quizEntry) {
 		req.quizEntry = quizEntry;
 		next();

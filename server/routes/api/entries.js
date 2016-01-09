@@ -5,6 +5,7 @@ var Promise = require('bluebird');
 var User = models.User;
 var Dict = models.Dictionary;
 var Entry = models.Entry;
+var QuizEntry = models.QuizEntry;
 module.exports = router;
 
 
@@ -45,6 +46,8 @@ router.delete('/:id', function (req, res, next){
 	.then(function(entry){
 		entry.remove()
 		.then(function(){
+			//delete associated quiz entries
+			QuizEntry.find({entry: req.params.id}).remove().exec();
 	  		res.status(200).end();
 		}).then(null, next);
 	}).then(null, next);

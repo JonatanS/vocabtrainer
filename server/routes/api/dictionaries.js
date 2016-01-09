@@ -42,8 +42,11 @@ router.post('/', function (req, res, next){
 // GET /api/dictionaries/:id
 router.param('id', function (req,res,next, id){
 	var dict = Dictionary.findById(id).lean().select('-__v -dateCreated');
+	console.log('got dict');
 	var entries = Entry.find({dictionary: id}).select('-__v');
+	console.log('got entries');
 	var quizzes = Quiz.find({dictionary: id});
+	console.log('got quizzes');
 	Promise.all([dict, entries, quizzes])
 	.then(function(dictEntriesArr){
 		var dict = dictEntriesArr[0];
@@ -58,6 +61,7 @@ router.param('id', function (req,res,next, id){
 });
 
 router.get('/:id', function (req, res) {
+	console.log("returning dict JSON");
 	res.json(req.dictionary);
 });
 
