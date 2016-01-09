@@ -1,5 +1,6 @@
-app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz ){
+app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz, activeDictionary ){
 	$scope.activeQuiz = activeQuiz;
+	$scope.activeDictionary = activeDictionary;
 	$scope.scores = QuizFactory;	//TODO: Replace this?
 	//console.log("ACTIVE:", activeQuiz);
 
@@ -11,12 +12,12 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz ){
 	$scope.setPhraseToQuiz = function(random) {
 		if(!$scope.idx && $scope.idx!==0) $scope.idx = -1;
 		if(random) {
-			$scope.idx = Math.floor((Math.random() * $scope.entriesToQuiz.length - 1) + 1);
+			$scope.idx = Math.floor((Math.random() * $scope.activeQuiz.entries.length - 1) + 1);
 		}
 		else {
-			$scope.idx = ($scope.idx < $scope.entriesToQuiz.length - 1 ? $scope.idx+1 : 0);
+			$scope.idx = ($scope.idx < $scope.activeQuiz.entries.length - 1 ? $scope.idx+1 : 0);
 		}
-		$scope.currentPhrase = $scope.entriesToQuiz[$scope.idx];
+		$scope.currentPhrase = $scope.activeQuiz.entries[$scope.idx];
 		$scope.hint.show = false;
 		console.log($scope.currentPhrase);
 		QuizFactory.numQuestionsAsked++;
@@ -74,11 +75,11 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz ){
 
 	};
 
-	$scope.setEntriesToQuiz = function(selectionCriteria) {
-		//TODO: filter selection based on criteria. for now take entire dict:
-		console.log($scope);
-		//$scope.entriesToQuiz = angular.copy($scope.activeQuiz.entries);
-	};
+	// $scope.setEntriesToQuiz = function(selectionCriteria) {
+	// 	//TODO: filter selection based on criteria. for now take entire dict:
+	// 	console.log($scope);
+	// 	$scope.activeQuiz.entries = angular.copy($scope.activeQuiz.entries);
+	// };
 
 	$scope.toggleRandom = function () {
 		$scope.randomMode = ! $scope.randomMode;
@@ -157,6 +158,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz ){
 	$scope.submission = {
 		answer: null
 	};
-	$scope.setEntriesToQuiz({});
+	//$scope.setEntriesToQuiz({});
 	$scope.setPhraseToQuiz(false);
 });

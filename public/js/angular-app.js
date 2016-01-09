@@ -52,8 +52,10 @@ app.config(function ($stateProvider){
 		resolve: {
 			activeQuiz: function (QuizFactory, $stateParams) {
 				return QuizFactory.populateQuiz($stateParams.quizId);
+			},
+			activeDictionary: function($stateParams) {
+				return $stateParams.dict;
 			}
-			//activeDictionary: $stateParams.dict;
 		}
 	});
 });

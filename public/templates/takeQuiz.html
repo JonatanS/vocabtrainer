@@ -1,9 +1,8 @@
-<h1>Practice your vocabulary in {{activeQuiz.name}}</h1>
-<p>This Dictionary Has {{activeQuiz.entries.length}} Entries</p>
-TODO: pick entries to practice (entire dict, by tag, level, cateogry, date..)
+<h1>Practice your vocabulary in {{activeQuiz.name | uppercase}}</h1>
+<p>This Quiz Has {{activeQuiz.entries.length}} Entries</p>
 <br/>
 <div class="practice-card">
-	<h4>translate the following into {{activeQuiz.language1}}:</h4>
+	<h4>translate the following into {{activeDictionary.language1}}:</h4>
 	<h2>{{currentPhrase.phraseL2}}</h2>
 	<!-- novalidate is used to disable browser's native form validation. -->
 	<div class="row">
