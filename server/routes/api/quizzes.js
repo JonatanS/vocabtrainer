@@ -27,8 +27,7 @@ router.param('id', function (req, res, next, id) {
 		}
 		if (quiz.filter_levels.length >0) query['level'] = {$in : quiz.filter_levels};
 		if (quiz.filter_categories.length >0) query['category'] = {$in : quiz.filter_categories};		if (quiz.filter_tags.length >0) query.tags['$in'] = quiz.filter_tags;
-		// console.log('Query:');
-		// console.log(query);
+
 		return filteredEntries = Entry.find(query)
 		.then( function (filteredEntries) {
 			var entryIds = filteredEntries.map(function (e) {
@@ -37,8 +36,10 @@ router.param('id', function (req, res, next, id) {
 			//2. use entry ID to find or create quizEntries
 			return QuizEntry.findOrCreateMultiple(id, entryIds)
 			.then(function (quizEntries) {
-				console.log("Got new-ish QuizEntries:", quizEntries.length)
-				quiz.entries = quizEntries;
+				//filter out muted entries
+				quiz.entries = quizEntries.filter(function (e) {
+					return e.mute === false;
+				});
 				req.quiz = quiz;
 				next();
 			})	

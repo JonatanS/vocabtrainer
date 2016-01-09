@@ -15,7 +15,7 @@
 				<button type="submit" class="btn btn-success" ng-disabled="quizForm.$invalid"  title="{{quizForm.$invalid ? 'answer cannot be empty':''}}">Submit</button>
 				<button type="button" ng-click="skipQuestion()" class="btn btn-default" title="skip this question"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
 				<button id="randomModeBtn" type="button" class="btn btn-default" ng-click="toggleRandom()" title="randomize order of questions"><span class="glyphicon glyphicon-random" aria-hidden="true"></span></button>
-				<button id="dislikeQuestionBtn" type="button" class="btn btn-default" disabled title="Don't quiz this phrase again"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></button>
+				<button id="dislikeQuestionBtn" type="button" class="btn btn-default" title="Don't quiz this phrase again"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" ng-click="dislikeEntry()"></span></button>
 			</div>
 		</form>
 	</div>

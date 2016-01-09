@@ -6,8 +6,6 @@ app.config(function ($stateProvider){
 	$stateProvider.state('user', {
 		url: '/user',
 		templateUrl: '/templates/user.html',
-		//activeTab: 'cards'
-		//template: '<h1>HELLO ALL</h1>'
 	});
 
 	$stateProvider.state('editDictionary', {
@@ -17,17 +15,6 @@ app.config(function ($stateProvider){
 		resolve: {
 			activeDictionary: function (DictionaryFactory, $stateParams) {
 				console.log($stateParams);
-				return DictionaryFactory.populateDict($stateParams.dictionaryId);
-			}
-		}
-	});
-
-	$stateProvider.state('practiceDictionaryOld', {
-		url: '/dictionaries/:dictionaryId/practice',
-		templateUrl: '/templates/practiceDictionaryOld.html',		
-		controller: 'DictionaryCtrl',
-		resolve: {
-			activeDictionary: function (DictionaryFactory, $stateParams) {
 				return DictionaryFactory.populateDict($stateParams.dictionaryId);
 			}
 		}
@@ -65,16 +52,6 @@ app.config(function ($stateProvider){
 					return retObject;
 				});
 			}
-			// activeQuiz: function (QuizFactory, $stateParams) {
-			// 	return QuizFactory.populateQuiz($stateParams.quizId);
-			// },
-			// activeDictionary: function(DictionaryFactory, $stateParams) {
-			// 	return QuizFactory.populateQuiz($stateParams.quizId)
-			// 	.then(function (quiz){
-			// 		console.log("getting dictionary for quiz page");
-			// 		return DictionaryFactory.populateDict(quiz.dictionary);				
-			// 	});
-			// }
 		}
 	});
 });

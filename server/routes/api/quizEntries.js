@@ -32,6 +32,18 @@ router.get('/:id', function (req, res){
 	res.json(req.quizEntry);
 });
 
+//mute quizEntry
+router.put('/:id/mute', function (req, res, next){
+	return QuizEntry.findById(req.params.id)
+	.then(function(quizEntry){
+		quizEntry.mute = true;
+		return quizEntry.save()
+		.then(function (quizEntry){
+			res.send(quizEntry);
+		}).then(null, next);
+	}).then(null, next);
+});
+
 //POST: /add new quiz
 router.post('/', function (req, res, next){
 	return QuizEntry.create({

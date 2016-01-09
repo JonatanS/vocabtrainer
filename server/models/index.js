@@ -122,8 +122,12 @@ var quizSchema = new mongoose.Schema({
 	filter_categories: [String],
 	dateLastTested: {type: Date, default: new Date(0)},
 	timesTested: {type: Number, default: 0},
+	numSubmits: {type: Number, default: 0},
 	avgScore: {type: Number, default: 0},
-	lastScore: {type: Number, default: 0}
+	bestScore: {type: Number, default: 0},
+	currentScore: {type: Number, default: 0},
+	livesRemaining: {type: Number, default: 10},
+	difficulty: {type: Number, default: 1}	//might need later to get further in quiz
 }, 
 	{toJSON: { virtuals: true }, toObject: { virtuals: true }}
 );
@@ -163,7 +167,6 @@ quizEntrySchema.statics.findOrCreateMultiple = function (quizId, arrEntryIds){
         		console.log("returning new QuizEntry");
         		var newQE = new QuizEntry({ quiz: quizId, entry: eid});
         		return newQE.save()
-        		//return self2.create({ quiz: quizId, entry: eid})
         		.then( function (newQuizEntry){
 	        		return Entry.populate(newQuizEntry, {path:'entry'}, function (err, qe) {
         				return qe;

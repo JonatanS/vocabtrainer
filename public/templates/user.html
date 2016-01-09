@@ -10,7 +10,6 @@ add links to add more vocab or to start the test
   <ul>
     <li ng-repeat="dict in user.dictionaries">
       <span>{{dict._id}}
-        <button type="submit" class="btn btn-info btn-sm" ui-sref="practiceDictionaryOld({dictionaryId: dict._id})">Practice_OLD</button>
         <a ui-sref="getQuizzes({dictionaryId: dict._id})">
           <button type="submit" class="btn btn-info btn-sm" autofocus >Select Quiz</button>
         </a>
