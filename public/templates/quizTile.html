@@ -1,11 +1,13 @@
 
 <div class="QuizTile" darken-on-hover ui-sref="takeQuiz({quizId: quiz._id})" >
 	<!-- TODO: insert delete button -->
-	<h4 class="Title">{{quiz.name | uppercase}}</h4>
-	<p class="Subtitle">
-		<span ng-if="(quiz.dateLastTested | date) > (dateUnused | date)">Last tested on {{quiz.dateLastTested | date : 'shortDate'}}</span>
-		<span ng-if="(quiz.dateLastTested | date) <= (dateUnused | date)">You have never used this quiz</span>
-	</p>
+	<h4 class="Title" ng-class="{InProgress: quiz.currentScore > 0 || quiz.livesRemaining < 10}">{{quiz.name | uppercase}}</h4>
+	<div ng-if="(quiz.dateLastTested | date) > (dateUnused | date)">
+		<p class="Subtitle">Last tested on {{quiz.dateLastTested | date : 'shortDate'}}</p>
+	</div>
+	<div ng-if="(quiz.dateLastTested | date) <= (dateUnused | date)">
+		<p class="Subtitle">You have not used this quiz</p>
+	</div>
 	<hr>
 	<h4>Filters:</h4>
 	<ul>

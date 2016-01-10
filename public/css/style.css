@@ -127,6 +127,13 @@ body {
 	text-align: center;
 }
 
+.QuizTile .InProgress {
+	color: #0CE3AC;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 1.6em;
+}
+
 .QuizTile .Subtitle {
 	text-align: center;
 	color: black;
