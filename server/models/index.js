@@ -158,6 +158,7 @@ var quizEntrySchema = new mongoose.Schema({
 });
 
 quizEntrySchema.statics.findOrCreateMultiple = function (quizId, arrEntryIds){
+	console.log("findOrCreateMultiple:" + quizId);
     var self1 = this;
     var self2 = this;
     return Promise.map(arrEntryIds, function(eid){

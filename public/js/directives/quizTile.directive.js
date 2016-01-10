@@ -11,12 +11,8 @@ app.directive('quizTile', function (QuizFactory) {
 				console.log("must load quiz entries and then render quiz page:");
 				console.log(currentQuiz);
 				console.log(scope);
-
-				//TODO: 
-				//show spinner
-				//populate quiz entries.
-				//load quiz page
 			}
+			scope.dateUnused = new Date(1000);
 		}
 	}
 });

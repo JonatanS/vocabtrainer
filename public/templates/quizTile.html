@@ -3,8 +3,8 @@
 	<!-- TODO: insert delete button -->
 	<h4 class="Title">{{quiz.name | uppercase}}</h4>
 	<p class="Subtitle">
-		<span ng-if="quiz.timesTested > 0">Last tested on {{quiz.dateLastTested | date : 'shortDate'}}</span>
-		<span ng-if="quiz.timesTested == 0">You have not used this quiz</span>
+		<span ng-if="(quiz.dateLastTested | date) > (dateUnused | date)">Last tested on {{quiz.dateLastTested | date : 'shortDate'}}</span>
+		<span ng-if="(quiz.dateLastTested | date) <= (dateUnused | date)">You have never used this quiz</span>
 	</p>
 	<hr>
 	<h4>Filters:</h4>

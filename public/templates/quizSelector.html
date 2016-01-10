@@ -3,6 +3,6 @@
 <p>This Dictionary Has {{activeDictionary.quizzes.length}} Quizzes</p>
 <div class="QuizGrid">
 <h2>Select a quiz below or create a new one</h2>
-	<quiz-tile quiz="entry" ng-repeat="entry in activeDictionary.quizzes | orderBy:'name'"></quiz-tile>
+	<quiz-tile quiz="entry" ng-repeat="entry in activeDictionary.quizzes | orderBy:'dateLastTested': true"></quiz-tile>
 	<quiz-tile-new></quiz-tile-new >
 </div>

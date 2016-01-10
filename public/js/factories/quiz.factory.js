@@ -26,10 +26,10 @@ app.factory("QuizFactory", function ($http){
 		},
 
 		update: function (quiz) {
-			console.log("factory:");
+			console.log("quizfactory:");
 			console.log(quiz);
 			quiz.dateLastTested = Date.now();
-			return $http.put('/api/quizzes/' + quiz._id, {quiz: quiz})
+			return $http.put('/api/quizzes/' + quiz._id, quiz)
 			.then (function (response){
 				return response.data;
 			});
