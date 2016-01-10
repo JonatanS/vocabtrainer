@@ -71,7 +71,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 
 	$scope.toggleRandom = function () {
 		$scope.randomMode = ! $scope.randomMode;
-		console.log($scope.randomMode);
 		if($scope.randomMode) $("#randomModeBtn").addClass("active");
 		else $("#randomModeBtn").removeClass("active");
 	};
@@ -90,7 +89,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 			return LookupFactory.getGlosbePhrases($scope.currentPhrase.phraseL1,$scope.activeDictionary.language1, $scope.activeDictionary.language2)
 			.then( function (response) {
 				$scope.example.examples = response.examples.map(function (e) {
-					console.log(e.first.replace(/<.*?>/g,''));
 					return e.first.replace(/<.*?>/g,'');
 				});
 				selectExample();
@@ -107,18 +105,21 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 	//before every round:
 	var prepareNextRound = function(impatient) {	
 		var hiddenAlert = impatient || false;
-		$scope.hint.show = false;
-		$scope.example.show = false;
-		$scope.submission.answer = null;
 
-		if (hiddenAlert) {
+		if (hiddenAlert) {		
+			$scope.hint.show = false;
+			$scope.example.show = false;
+			$scope.submission.answer = null;
 			setPhraseToQuiz();
 			resetScore();
 		}
 		if (!hiddenAlert && !$scope.impatientClick) {
+			//this was not called from hideAlert()
+			$scope.hint.show = false;
+			$scope.example.show = false;
+			$scope.submission.answer = null;
 			setPhraseToQuiz();
 			resetScore();
-			//this was not called from hideAlert()
 			$scope.impatientClick = false;
 		}
 		if (!hiddenAlert && $scope.impatientClick) {
@@ -128,7 +129,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 
 	//randomly pick a phrase to translate:
 	var setPhraseToQuiz = function() {
-		console.dir($scope);
 		if(!$scope.idx && $scope.idx!==0) $scope.idx = -1;
 		if($scope.randomMode) {
 			$scope.idx = Math.floor((Math.random() * $scope.activeQuiz.entries.length - 1) + 1);
@@ -137,7 +137,6 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 			$scope.idx = ($scope.idx < $scope.activeQuiz.entries.length - 1 ? $scope.idx+1 : 0);
 		}
 		$scope.currentPhrase = $scope.activeQuiz.entries[$scope.idx].entry;
-		console.log($scope.currentPhrase);
 	};
 
 	var deductLive = function() {
@@ -186,7 +185,7 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 		arrModifiedEntries.push(curQuizEntry);
 
 		++numStepsSinceLastSave;
-		if (numStepsSinceLastSave > 5) {
+		if (numStepsSinceLastSave > 2) {
 			saveProgress();
 			numStepsSinceLastSave = 0;
 		}
@@ -204,15 +203,12 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 	}
 
 	var selectExample = function () {
-			console.log($scope.example);
 			if ($scope.example.examples.length > 0) {
-				console.log("incr idx");
 				$scope.example.idx = $scope.example.idx < $scope.example.examples.length -1 ? $scope.example.idx+=1 : 0;
-				console.log($scope.example.idx);
+				//console.log($scope.example.idx);
 				$scope.example.value = $scope.example.examples[$scope.example.idx];
 			}
 			else $scope.example.value = "No examples available for this phrase";
-			console.log($scope.example.value);
 	};
 
 	var resetScore = function() {
@@ -225,7 +221,7 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 		$scope.feedback.show = true;
 		$timeout(function() {
 		    $scope.feedback.show = false;
-		    console.log("In alert");
+		    //console.log("In alert");
 		    cb();
 		}, 3000);
 	};

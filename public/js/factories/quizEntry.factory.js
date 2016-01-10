@@ -8,7 +8,9 @@ app.factory('QuizEntryFactory', function ($http){
 		},
 
 		saveModifiedEntries: function (arrQuizEntries) {
+			console.log('Saving ' + arrQuizEntries.length + ' quizentries:');
 			arrQuizEntries.forEach(function (qe) {
+				console.log(qe);
 				return $http.put('/api/quizentries/' + qe._id, qe)
 				.then (function (response){
 					return response.data;

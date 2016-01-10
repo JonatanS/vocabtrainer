@@ -34,25 +34,12 @@ router.get('/:id', function (req, res){
 
 //update quizEntry
 router.put('/:id', function (req, res, next){
-	//console.log(req.body.quizEntry);
-	return QuizEntry.findById(req.params.id)
-	.then(function(quizEntry){
-		var needsSave = false;
-		for (var prop in req.body.quizEntry){
-			if(quizEntry[prop] != req.body.quizEntry[prop]){
-				//update if different
-				if(prop == 'tags') {
-					quizEntry.tags = req.body.quizEntry.tags ? req.body.quizEntry.tags.split(',') : []
-				} else {
-					quizEntry[prop] = req.body.quizEntry[prop];
-				}
-				needsSave = true;
-			}
-		}
-		return quizEntry.save()
-		.then(function (quizEntry){
-			res.send(quizEntry);
-		}).then(null, next);
+	console.log(req.body);
+	return QuizEntry.findOneAndUpdate({_id: req.params.id}, req.body)
+	.then(function (quizEntry){
+		console.log('saved quizEntry:');
+		console.log(quizEntry);
+		res.send(quizEntry);
 	}).then(null, next);
 });
 
