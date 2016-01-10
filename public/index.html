@@ -11,14 +11,18 @@
 </head>
 
 <body ng-app="vocabularyTrainer">
-<div ng-controller="MainCtrl">
-    <div ng-include="'templates/navbar.html'"></div>
-    <div ng-include="'templates/quizStats.html'"></div>
+    <div ng-controller="MainCtrl">
+        <!-- <div ng-include="'templates/navbar.html'"></div> -->
+<!--     </div>
 
-    <!-- Dynamic Templates here: -->
-    <div ui-view></div>
+    <div ng-controller="QuizCtrl"> -->
+        <div ng-include="'templates/quizStats.html'"></div>
+    </div>
 
-</div> <!--main controller-->
+    <div ng-controller="MainCtrl">
+        <!-- Dynamic Templates here: -->
+        <div ui-view></div>
+    </div> <!--main controller-->
 </body>
     <script src="/js/lib/angular.js"></script>
     <script src="/js/lib/angular-ui-router.js"></script>

@@ -4,48 +4,31 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 	$scope.activeQuiz = quizData.quiz;
 	$scope.activeDictionary = quizData.dictionary;
 
-	//before every round:
-	$scope.prepareNextRound = function() {
-		console.log($scope.activeQuiz);		
-		$scope.hint.show = false;
-		$scope.example.show = false;
-		$scope.submission.answer = null;
-		$scope.setPhraseToQuiz();
-		resetScore();
-	};
 
-	//randomly pick a phrase to translate:
-	$scope.setPhraseToQuiz = function() {
-		if(!$scope.idx && $scope.idx!==0) $scope.idx = -1;
-		if($scope.randomMode) {
-			$scope.idx = Math.floor((Math.random() * $scope.activeQuiz.entries.length - 1) + 1);
-		}
-		else {
-			$scope.idx = ($scope.idx < $scope.activeQuiz.entries.length - 1 ? $scope.idx+1 : 0);
-		}
-		$scope.currentPhrase = $scope.activeQuiz.entries[$scope.idx].entry;
-		QuizFactory.numQuestionsAsked++;
-		console.log($scope.currentPhrase);
-	};
+	$scope.hideAlert = function () {
+		$scope.impatientClick = true;
+		prepareNextRound(true);
+	}
 
 	$scope.evaluateSubmission = function(){
-		if($scope.submission.answer === $scope.currentPhrase.phraseL1) {
-			//calculate added points. 
 
-			//prepare next round as callback
-			showAlert(true);
+		if($scope.submission.answer === $scope.currentPhrase.phraseL1) {
+			//set score
 		}
 		else {
-			showAlert(false);
+			$scope.score.penalty = 4;
 		}
 		//save Quiz and QuizEntry
-		saveProgress();
+		updateProgress();
+		$scope.showHint('solution');
+		//send prepare next round as callback
+		showAlert(prepareNextRound);
 	};
 
 	$scope.skipQuestion = function(){
 		deductLive();
-		saveProgress();
-		$scope.prepareNextRound();
+		updateProgress();
+		prepareNextRound();
 	};
 
 	$scope.showHint = function(hintType) {
@@ -79,8 +62,9 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 		//solution
 		else if (hintType === "solution") {
 			$scope.hint.value = $scope.currentPhrase.phraseL1
-			$scope.score.penalty = 5;
+			$scope.score.penalty = 4;
 		}
+		$scope.score.penalty = ($scope.score.penalty > 4 ? 4 : $scope.score.penalty);
 		$scope.hint.type = hintType;
 		$scope.hint.show = true;
 	};
@@ -96,7 +80,7 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 		//set mute of entry to true and save
 		QuizEntryFactory.mute($scope.activeQuiz.entries[$scope.idx]._id);
 		$scope.activeQuiz.entries.splice($scope.idx, 1);
-		$scope.prepareNextRound();
+		prepareNextRound();
 	};
 
 	$scope.getExamples = function () {
@@ -113,7 +97,47 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 			});
 		}
 		else selectExample();	
+	};
 
+	var numStepsSinceLastSave = 0;
+	var arrModifiedEntries = [];
+	var nextScoreToReach = $scope.activeQuiz.currentScore + 50;
+	
+
+	//before every round:
+	var prepareNextRound = function(impatient) {	
+		var hiddenAlert = impatient || false;
+		$scope.hint.show = false;
+		$scope.example.show = false;
+		$scope.submission.answer = null;
+
+		if (hiddenAlert) {
+			setPhraseToQuiz();
+			resetScore();
+		}
+		if (!hiddenAlert && !$scope.impatientClick) {
+			setPhraseToQuiz();
+			resetScore();
+			//this was not called from hideAlert()
+			$scope.impatientClick = false;
+		}
+		if (!hiddenAlert && $scope.impatientClick) {
+			$scope.impatientClick = false;
+		}
+	};
+
+	//randomly pick a phrase to translate:
+	var setPhraseToQuiz = function() {
+		console.dir($scope);
+		if(!$scope.idx && $scope.idx!==0) $scope.idx = -1;
+		if($scope.randomMode) {
+			$scope.idx = Math.floor((Math.random() * $scope.activeQuiz.entries.length - 1) + 1);
+		}
+		else {
+			$scope.idx = ($scope.idx < $scope.activeQuiz.entries.length - 1 ? $scope.idx+1 : 0);
+		}
+		$scope.currentPhrase = $scope.activeQuiz.entries[$scope.idx].entry;
+		console.log($scope.currentPhrase);
 	};
 
 	var deductLive = function() {
@@ -121,22 +145,63 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 
 		if($scope.activeQuiz.livesRemaining === 0) {
 			alert("Game Over. No more lives left");
-			//save quiz and quiz entries
-			//show a modal with final score and button to select next quiz
+			//evaluate best score when game is over
+			if ($scope.activeQuiz.currentScore > $scope.activeQuiz.bestScore) {
+				$scope.activeQuiz.bestScore = $scope.activeQuiz.currentScore;
+				$scope.activeQuiz.dateBestScore = Date.now();
+			}
+			saveProgress();
+		//TODO show a modal with final score and button to select next quiz
 		}
 	}
 
-	var saveProgress = function(){
-		++$scope.activeQuiz.numSubmits;
-		//calculate score for this submit:
+	var updateProgress = function(){
+		//calculate score for this attempt:
+		console.dir($scope.score);
+		$scope.score.phraseScore = $scope.score.phraseValue - ($scope.score.penalty/4 * $scope.score.phraseMultiplier * 5);
 
+		//calculate current score for this QUIZ:
+		$scope.activeQuiz.currentScore += $scope.score.phraseScore;
 
-		//calculate current score for this quiz:
+		if ($scope.activeQuiz.currentScore >= nextScoreToReach) {
+			alert("nice job - you reached 50 more points");
+			nextScoreToReach = nextScoreToReach + 50;
+			//TODO: Show modal here with giphy or animation
+		}
 
 		// //calculate new average:
-		// $scope.activeQuiz.avgScore = $scope.activeQuiz.avgScore * ($scope.activeQuiz.numSubmits-1) + 
+		$scope.activeQuiz.avgScore = ($scope.activeQuiz.avgScore * $scope.activeQuiz.numAttempts + $scope.score.phraseScore)/($scope.activeQuiz.numAttempts +1);
+		++$scope.activeQuiz.numAttempts;
 
+		//update curQuizEntry
+		var curQuizEntry = $scope.activeQuiz.entries[$scope.idx];
+		curQuizEntry.dateLastTested = Date.now();
+
+		$scope.feedback.trend = (curQuizEntry.lastScore < $scope.score.phraseScore ? 2 : curQuizEntry.lastScore === $scope.score.phraseScore? 1 : 0);
+		$scope.feedback.type = ($scope.score.penalty === 0 ? 2 : $scope.score.penalty === 4 ? 0 : 1);
+		if ($scope.score.penalty === 4) deductLive();
+		curQuizEntry.lastScore = $scope.score.phraseScore;
+		curQuizEntry.avgScore = (curQuizEntry.avgScore * curQuizEntry.numAttempts + $scope.score.phraseScore)/(curQuizEntry.numAttempts +1);
+		++curQuizEntry.numAttempts;
+		arrModifiedEntries.push(curQuizEntry);
+
+		++numStepsSinceLastSave;
+		if (numStepsSinceLastSave > 5) {
+			saveProgress();
+			numStepsSinceLastSave = 0;
+		}
 	};
+
+	var saveProgress = function() {
+		console.log('saving');
+		//save entries from arrModifiedEntries
+		QuizEntryFactory.saveModifiedEntries(arrModifiedEntries);
+		//save quiz
+		QuizFactory.update($scope.activeQuiz);
+
+		arrModifiedEntries = [];
+		//alert: progress has been saved
+	}
 
 	var selectExample = function () {
 			console.log($scope.example);
@@ -151,33 +216,39 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 	};
 
 	var resetScore = function() {
-		$scope.score.penalty = 0;	//reset to 0
-		$scope.score.phraseValue = $scope.currentPhrase.level * 5 * ($scope.currentPhrase.type == 'word' ? 1 : 2);	//make dependent on level/ multiple words (5* level)
-		if(!$scope.score.phraseValue) $scope.score.phraseValue = 5;
+		$scope.score.penalty = 0;	//reset to 1
+		$scope.score.phraseMultiplier = $scope.currentPhrase.level * ($scope.currentPhrase.type == 'word' ? 1 : 2 || 1);	//make dependent on level/ multiple words (5* level)
+		$scope.score.phraseValue = 5 * $scope.score.phraseMultiplier;
 	};
 
-	var showAlert = function (success) {
-		if (success) {
-			$scope.alert.failure = false;
-			$scope.alert.success = true;
-		}
-		else {
-			$scope.alert.failure = true;
-			$scope.alert.success = false;
-		}
-		$scope.alert.show = true;
+	var showAlert = function (cb) {
+		$scope.feedback.show = true;
 		$timeout(function() {
-		    $scope.alert.show = false;
+		    $scope.feedback.show = false;
+		    console.log("In alert");
+		    cb();
 		}, 3000);
 	};
+
+	$scope.impatientClick = false;	//used to remove 3 second delay of alert
 
 	$scope.score = {
 		penalty: 0,
 		phraseValue: 0,	//make dependent on level/ multiple words (5* level)
+		phraseScore: 0,	//calculate and show in feedback
+		phraseMultiplier: 1,
 		totalPoints: $scope.activeQuiz.currentScore
-	}
+	};
 
 	$scope.randomMode = false;
+
+	//use to give feedback in alert after every round
+	$scope.feedback = {
+		trend: 1,	//0 = down, 1 = equal, 2 = up
+		show: false,	//use to control ng-if
+		type: 1	//0 = red, 1 = yellow, 2 = green
+	};
+
 	$scope.alert = {
 		show : false,
 		success : false,
@@ -196,5 +267,5 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 	$scope.submission = {
 		answer: null
 	};
-	$scope.prepareNextRound();
+	prepareNextRound();
 });

@@ -121,10 +121,11 @@ var quizSchema = new mongoose.Schema({
 	filter_tags: [String],
 	filter_categories: [String],
 	dateLastTested: {type: Date, default: new Date(0)},
-	timesTested: {type: Number, default: 0},
-	numSubmits: {type: Number, default: 0},
+	dateBestScore: {type: Date},	//evaluate once quiz is over
+	numAttempts: {type: Number, default: 0},
 	avgScore: {type: Number, default: 0},
 	bestScore: {type: Number, default: 0},
+
 	currentScore: {type: Number, default: 0},
 	livesRemaining: {type: Number, default: 10},
 	difficulty: {type: Number, default: 1}	//might need later to get further in quiz

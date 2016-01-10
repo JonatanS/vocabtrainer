@@ -5,6 +5,15 @@ app.factory('QuizEntryFactory', function ($http){
 			.then (function (response){
 				return response.data;
 			});
-		}
+		},
+
+		saveModifiedEntries: function (arrQuizEntries) {
+			arrQuizEntries.forEach(function (qe) {
+				return $http.put('/api/quizentries/' + qe._id, qe)
+				.then (function (response){
+					return response.data;
+				});
+			})
+		} 
 	};
 });

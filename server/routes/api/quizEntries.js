@@ -32,6 +32,30 @@ router.get('/:id', function (req, res){
 	res.json(req.quizEntry);
 });
 
+//update quizEntry
+router.put('/:id', function (req, res, next){
+	//console.log(req.body.quizEntry);
+	return QuizEntry.findById(req.params.id)
+	.then(function(quizEntry){
+		var needsSave = false;
+		for (var prop in req.body.quizEntry){
+			if(quizEntry[prop] != req.body.quizEntry[prop]){
+				//update if different
+				if(prop == 'tags') {
+					quizEntry.tags = req.body.quizEntry.tags ? req.body.quizEntry.tags.split(',') : []
+				} else {
+					quizEntry[prop] = req.body.quizEntry[prop];
+				}
+				needsSave = true;
+			}
+		}
+		return quizEntry.save()
+		.then(function (quizEntry){
+			res.send(quizEntry);
+		}).then(null, next);
+	}).then(null, next);
+});
+
 //mute quizEntry
 router.put('/:id/mute', function (req, res, next){
 	return QuizEntry.findById(req.params.id)

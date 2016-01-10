@@ -1,4 +1,7 @@
 <h1>Practice your vocabulary in {{activeQuiz.name | uppercase}}</h1>
+
+<div ng-include="'templates/navbar.html'"></div>
+
 <p>This Quiz Has {{activeQuiz.entries.length}} Entries</p>
 <br/>
 <div class="practice-card">
@@ -39,20 +42,19 @@
 </div>
 <div class="practice-response-field">
 	<div class="row">
-	<div class="alert alert-info alert-dismissible animate-hide" role="alert" ng-show="example.show">
-	<button type="button" class="close" ng-click="getExamples()" class="btn btn-info btn-xs" title="show example"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
-  		{{example.value}}
-<!--     <a class="alert-link" href="#">more examples</a> -->
+		<div class="alert alert-info animate-hide" role="alert" ng-show="example.show">
+		<button type="button" class="close" ng-click="getExamples()" class="btn btn-info btn-xs" title="show example"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+	  		{{example.value}}
+	<!--     <a class="alert-link" href="#">more examples</a> -->
+		</div>
+	</div> <!-- row -->
+	<div class="alert alert-success animate-hide" role="alert" ng-show="feedback.type === 2 && feedback.show" ng-click="hideAlert()">
+	    Right on! You scored {{score.phraseScore}}/{{score.phraseValue}} points!
 	</div>
+	<div class="alert alert-warning animate-hide" role="alert" ng-show="feedback.type === 1 && feedback.show" ng-click="hideAlert()">
+	    Not bad! You scored {{score.phraseScore}}/{{score.phraseValue}} points!
 	</div>
-	<div class="alert alert-success alert-dismissible animate-hide" role="alert" ng-show="alert.success && alert.show">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    Right on! Well done!
-	</div>
-	<div class="alert alert-danger alert-dismissible animate-hide" role="alert" ng-show="alert.failure && alert.show">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    Oh no! Try again! Or skip this question...
-	    <a class="alert-link" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
-	    <a class="alert-link" href="#"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>
+	<div class="alert alert-danger animate-hide" role="alert" ng-show="feedback.type === 0 && feedback.show" ng-click="hideAlert()">
+	    Oh no! You have {{activeQuiz.livesRemaining}} lives remaining!
 	</div>
 </div>
