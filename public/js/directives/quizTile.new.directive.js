@@ -1,4 +1,4 @@
-app.directive('quizTileNew', function (QuizFactory) {
+app.directive('quizTileNew', function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/quizTileNew.html',

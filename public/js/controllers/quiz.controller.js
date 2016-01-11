@@ -185,7 +185,8 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 		arrModifiedEntries.push(curQuizEntry);
 
 		++numStepsSinceLastSave;
-		if (numStepsSinceLastSave > 2) {
+		//save at every step
+		if (numStepsSinceLastSave > 0) {
 			saveProgress();
 			numStepsSinceLastSave = 0;
 		}

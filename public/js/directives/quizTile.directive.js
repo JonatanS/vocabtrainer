@@ -1,4 +1,4 @@
-app.directive('quizTile', function (QuizFactory) {
+app.directive('quizTile', function () {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/quizTile.html',
@@ -6,13 +6,7 @@ app.directive('quizTile', function (QuizFactory) {
 			quiz: '='
 		}, 
 		link: function(scope) {
-			//use ng-click in quiz-tile to trigger:
-			scope.onClick = function(currentQuiz) {
-				console.log("must load quiz entries and then render quiz page:");
-				console.log(currentQuiz);
-				console.log(scope);
-			}
-			scope.dateUnused = new Date(1000);
+			scope.dateUnused = new Date(1000);	//use to evaluate whether a quiz has been used before
 		}
-	}
+	};
 });

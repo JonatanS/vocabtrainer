@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>VocabularyTrainer</title>
-  <head>
+    <title>VocabularyTrainer</title>
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
     <script src="/jquery/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
@@ -12,18 +11,9 @@
 
 <body ng-app="vocabularyTrainer">
     <div ng-controller="MainCtrl">
-        <!-- <div ng-include="'templates/navbar.html'"></div> -->
-<!--     </div>
-
-    <div ng-controller="QuizCtrl"> -->
-        <div ng-include="'templates/quizStats.html'"></div>
-    </div>
-
-    <div ng-controller="MainCtrl">
-        <!-- Dynamic Templates here: -->
+        <div ng-include="'templates/navbar.html'"></div>
         <div ui-view></div>
     </div> <!--main controller-->
-</body>
     <script src="/js/lib/angular.js"></script>
     <script src="/js/lib/angular-ui-router.js"></script>
     <script src="/js/angular-app.js"></script>
