@@ -1,5 +1,5 @@
 //app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz, activeDictionary ){
-app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, LookupFactory, QuizEntryFactory ){
+app.controller("QuizCtrl", function ($location, $scope, QuizFactory, quizData, $timeout, LookupFactory, QuizEntryFactory ){
 	console.log(quizData);
 	$scope.activeQuiz = quizData.quiz;
 	$scope.activeDictionary = quizData.dictionary;
@@ -95,6 +95,15 @@ app.controller("QuizCtrl", function ($scope, QuizFactory, quizData, $timeout, Lo
 			});
 		}
 		else selectExample();	
+	};
+
+	$scope.pauseQuiz = function() {
+		var path = '/dictionaries/'+ $scope.activeDictionary._id + '/quizzes';
+		$location.path(path);
+	};
+	
+	$scope.resetQuiz = function() {
+		alert("reset quiz");
 	};
 
 	var numStepsSinceLastSave = 0;

@@ -32,6 +32,10 @@ body {
 	color: #dba84c;
 }
 
+.glyphicon-lg {
+	font-size: 1.5em;
+}
+	
 .table#entry-list > tbody > tr.editContent {
 	color: #86c5da;
 	font-style: italic;
@@ -60,16 +64,24 @@ body {
 	width: 600px;
 	height: 250px;
 	margin: 0 auto;
-	margin-top: 20px;
+/*	margin-top: 20px;*/
 	border: 1px solid black;
-	padding: 30px;
+	padding: 20px 30px;
 	border-radius: 7px;
 	box-shadow: 3px 4px 5px 1px #6b6b6b;
 	background-color: #3498DB;
 }
 
+.practice-card .no-margin {
+	margin: 5px;
+}
+
 .practice-card .form-inline .form-control {
 	width: 100%;
+}
+
+.practice-card .card-ui {
+	text-align: right;
 }
 
  .hint-btns {
