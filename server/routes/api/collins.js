@@ -5,7 +5,6 @@ var Collins = require('collins');
 var serverName = 'api.collinsdictionary.com';
 var configAuth = require('../../../config/secrets');
 var accessKey = configAuth.collinsAuth.apikey;
-var parser = require('xml2json');
 var parseString = require('xml2js').parseString;
 module.exports = router;
 
@@ -30,14 +29,7 @@ router.get('/dictionaries', function (req, res, next) {
 // 		res.json(data);
 // 	});
 // });
-var parserOptions = {
-    object: true,
-    // sanitize: false,
-    trim: false,
-    // reversible: true,
-    coerce: true,       
-    // arrayNotation: true
-};
+
 
 router.get('/dictionaries/search', function (req, res, next) {
 	var l1 = req.query.language1;
@@ -59,7 +51,6 @@ router.get('/dictionaries/search', function (req, res, next) {
     			res.send(result);
 			});
 			//res.send(entries);
-			//res.json(entries.entryContent.toString());
 		})
 	});
 });
