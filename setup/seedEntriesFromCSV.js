@@ -22,9 +22,6 @@ fs.readFile('german-english-seed.csv', function(err, data){
 			email: 'jonatan@jschumacher.com',
 			firstName: 'Jonatan',
 			lastName: 'Schumacher'
-			// email: 'me@gmail.com',
-			// firstName: 'Todd',
-			// lastName: 'Schultz'
 			// email: 'daniella.polar@gmail.com',
 			// firstName: 'Dani',
 			// lastName: 'Schumi'

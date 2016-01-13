@@ -6,6 +6,7 @@ router.use('/entries', require('./entries'));
 router.use('/dictionaries', require('./dictionaries'));
 router.use('/quizzes', require('./quizzes'));
 router.use('/quizentries', require('./quizEntries'));
+router.use('/lookup', require('./collins'));
 
 // Make sure this is declared //
 // AFTER all of the registered routes!

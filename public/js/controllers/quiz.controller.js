@@ -1,5 +1,5 @@
 //app.controller("QuizCtrl", function ($scope, QuizFactory, activeQuiz, activeDictionary ){
-app.controller("QuizCtrl", function ($location, $scope, QuizFactory, quizData, $timeout, LookupFactory, QuizEntryFactory ){
+app.controller("QuizCtrl", function ($location, $scope, QuizFactory, quizData, $timeout, LookupFactory, CollinsFactory, QuizEntryFactory ){
 	console.log(quizData);
 	$scope.activeQuiz = quizData.quiz;
 	$scope.activeDictionary = quizData.dictionary;
@@ -56,7 +56,7 @@ app.controller("QuizCtrl", function ($location, $scope, QuizFactory, quizData, $
 		//vowels
 		else if (hintType === "vowels") {
 			//regex replace filter "_"
-			$scope.hint.value = $scope.currentPhrase.phraseL1.replace(/[^aeiou!%&@?,.';:"\s]/g, '_');
+			$scope.hint.value = $scope.currentPhrase.phraseL1.replace(/[^aeiou!%&@?,.';:"\s]/gi, '_');
 			$scope.score.penalty = $scope.score.penalty +2;
 		}
 		//solution
@@ -82,11 +82,26 @@ app.controller("QuizCtrl", function ($location, $scope, QuizFactory, quizData, $
 		prepareNextRound();
 	};
 
-	$scope.getExamples = function () {
+	$scope.getExamplesGlosbe = function () {
 		$scope.example.show = true;
 		if ($scope.example.examples.length === 0 && $scope.example.idx === -1) {
 			//grab examples from API and populate .examples array:
 			return LookupFactory.getGlosbePhrases($scope.currentPhrase.phraseL1,$scope.activeDictionary.language1, $scope.activeDictionary.language2)
+			.then( function (response) {
+				$scope.example.examples = response.examples.map(function (e) {
+					return e.first.replace(/<.*?>/g,'');
+				});
+				selectExample();
+			});
+		}
+		else selectExample();	
+	};
+
+	$scope.getExamples = function () {
+		$scope.example.show = true;
+		if ($scope.example.examples.length === 0 && $scope.example.idx === -1) {
+			//grab examples from API and populate .examples array:
+			return CollinsFactory.getPhrases($scope.currentPhrase.phraseL1)
 			.then( function (response) {
 				$scope.example.examples = response.examples.map(function (e) {
 					return e.first.replace(/<.*?>/g,'');

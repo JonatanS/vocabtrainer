@@ -137,20 +137,20 @@ body {
 
 .QuizTile .Title {
 	text-align: center;
-}
-
-.QuizTile .InProgress {
-	color: #0CE3AC;
-	font-style: italic;
-	font-weight: bold;
-	font-size: 1.6em;
+	color: #191970;
 }
 
 .QuizTile .Subtitle {
 	text-align: center;
-	color: black;
-	font-weight: bold;
+	color: #191970;
+	font-style: italic;
+	font-size: 1.2em;
 }
+
+.QuizTile .InProgress {
+	color: white;
+}
+
 
 #newQuizTile {
 	background-color: #0CE3AC;
