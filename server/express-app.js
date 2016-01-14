@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var _ = require('lodash');
 var swig = require('swig');
 require('../non-angular-public/filters')(swig);	//returns a function from './filters': http://paularmstrong.github.io/swig/docs/filters/
 var path = require('path');

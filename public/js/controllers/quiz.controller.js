@@ -101,12 +101,13 @@ app.controller("QuizCtrl", function ($location, $scope, QuizFactory, quizData, $
 		$scope.example.show = true;
 		if ($scope.example.examples.length === 0 && $scope.example.idx === -1) {
 			//grab examples from API and populate .examples array:
-			return CollinsFactory.getPhrases($scope.currentPhrase.phraseL1)
+			return CollinsFactory.getPhrases($scope.activeDictionary.language1, $scope.activeDictionary.language2,$scope.currentPhrase.phraseL1)
 			.then( function (response) {
-				$scope.example.examples = response.examples.map(function (e) {
-					return e.first.replace(/<.*?>/g,'');
-				});
-				selectExample();
+				console.log(response);
+				// $scope.example.examples = response.examples.map(function (e) {
+				// 	return e.first.replace(/<.*?>/g,'');
+				// });
+				// selectExample();
 			});
 		}
 		else selectExample();	
